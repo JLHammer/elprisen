@@ -1,0 +1,16 @@
+# Logs
+logs
+*.log
+
+node_modules
+dist
+dev-dist
+.vite
+
+# Environment variables
+.env
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
