@@ -1,0 +1,101 @@
+import { useId, type ReactNode } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { Icon } from "../ui/Icon";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { mediaQueries } from "../../styles/theme";
+import { ROUTES } from "../../router/routes";
+
+const SITE_NAME = "Elprisen";
+
+type MainContentWrapperProps = {
+  title: string;
+  heading: string;
+  headingSpacing?: string;
+  headingExtra?: ReactNode;
+  children?: ReactNode;
+};
+
+const WrapperStyled = styled.section`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 4rem;
+`;
+
+const HeadingRow = styled.div<{ $spacing: string }>`
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  margin-bottom: ${({ $spacing }) => $spacing};
+`;
+
+const HeadingExtra = styled.div`
+  grid-column: 3;
+  justify-self: start;
+  display: flex;
+  margin-left: 0.5rem;
+`;
+
+const Heading = styled.h1`
+  grid-column: 2;
+  text-align: center;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+const SettingsButton = styled.button`
+  position: absolute;
+  top: 0.5rem;
+  right: 0.25rem;
+  color: ${({ theme }) => theme.colors.text};
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+export const MainContentWrapper = ({
+  title,
+  heading,
+  headingSpacing = "1rem",
+  headingExtra,
+  children,
+}: MainContentWrapperProps) => {
+  const headingId = useId();
+  const navigate = useNavigate();
+  const isTabletUp = useMediaQuery(mediaQueries.tablet);
+
+  const handleSettingsClick = isTabletUp
+    ? undefined
+    : () => navigate(ROUTES.settings);
+
+  return (
+    <>
+      <title>{`${SITE_NAME} | ${title}`}</title>
+
+      <WrapperStyled aria-labelledby={headingId}>
+        <SettingsButton
+          type="button"
+          aria-label="Indstillinger"
+          onClick={handleSettingsClick}
+        >
+          <Icon icon={faCog} size="1.5rem" />
+        </SettingsButton>
+        <HeadingRow $spacing={headingSpacing}>
+          <Heading id={headingId}>{heading}</Heading>
+          {headingExtra && <HeadingExtra>{headingExtra}</HeadingExtra>}
+        </HeadingRow>
+        {children}
+      </WrapperStyled>
+    </>
+  );
+};
