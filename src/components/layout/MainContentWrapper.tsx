@@ -9,8 +9,12 @@ import { ROUTES } from "../../router/routes";
 
 const SITE_NAME = "Elprisen";
 
-type MainContentWrapperProps = {
-  title: string;
+export type MainContentWrapperProps = {
+  /*
+    Left out on the desktop dashboard, so its three sections don't each add a <title>
+    and the tab keeps index.html's plain site name
+  */
+  title?: string;
   heading: string;
   headingSpacing?: string;
   headingExtra?: ReactNode;
@@ -80,7 +84,7 @@ export const MainContentWrapper = ({
 
   return (
     <>
-      <title>{`${SITE_NAME} | ${title}`}</title>
+      {title && <title>{`${SITE_NAME} | ${title}`}</title>}
 
       <WrapperStyled aria-labelledby={headingId}>
         <SettingsButton

@@ -8,6 +8,11 @@ const PriceExtremesStyled = styled.div`
   display: flex;
   justify-content: center;
   gap: 1.5rem;
+
+  /* Desktop shows it under the current price, which has no spacing below it */
+  @media ${({ theme }) => theme.mediaQueries.desktop} {
+    margin-top: 4rem;
+  }
 `;
 
 const PriceExtreme = styled.div`

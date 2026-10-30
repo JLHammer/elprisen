@@ -1,3 +1,6 @@
+// The dashboard on desktop, mobile and tablet redirect it to "Lige nu"
+export const HOME = "/";
+
 export const ROUTES = {
   overview: "/oversigt",
   rightNow: "/lige-nu",
