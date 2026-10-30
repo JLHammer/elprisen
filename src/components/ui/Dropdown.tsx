@@ -31,12 +31,6 @@ const Trigger = styled.button<{ $open: boolean }>`
   background-color: ${({ theme }) => theme.colors.backgroundDark};
   color: ${({ theme }) => theme.colors.text};
   text-transform: inherit;
-  cursor: pointer;
-
-  &:focus-visible {
-    outline: 1px dashed ${({ theme }) => theme.colors.text};
-    outline-offset: 2px;
-  }
 `;
 
 const ChevronStyled = styled.span`

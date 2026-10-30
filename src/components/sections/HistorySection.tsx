@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
 import {
   FIRST_DATE,
   useElectricityPrices,
@@ -8,6 +8,7 @@ import { useHistoryDate } from "../../hooks/useHistoryDate";
 import { getDanishDate } from "../../utils/danishTime";
 import { formatDate } from "../../utils/format";
 import { getPriceLevels } from "../../utils/priceLevel";
+import { card } from "../../styles/card";
 import { Icon } from "../ui/Icon";
 import { PriceHourEntry } from "../ui/PriceHourEntry";
 
@@ -26,15 +27,22 @@ const DatePicker = styled.label`
   align-items: center;
   padding: 0.75rem 1.8rem;
   margin-bottom: 3rem;
-  background-color: ${({ theme }) => theme.colors.backgroundDark};
+  ${card}
   border-radius: 0.5rem;
-  box-shadow: ${({ theme }) => theme.boxShadows.outer(10)};
   color: ${({ theme }) => theme.colors.primary};
   cursor: pointer;
+  transition: ${({ theme }) => theme.transitions.hover("color", "box-shadow")};
 
+  &:hover {
+    color: ${({ theme }) => theme.colors.text};
+    box-shadow: ${({ theme }) => theme.boxShadows.outer(20)};
+  }
+
+  /* The date input inside is invisible, so the label shows its focus instead */
   &:focus-within {
-    outline: 2px solid ${({ theme }) => theme.colors.primary};
-    outline-offset: 2px;
+    color: ${({ theme }) => theme.colors.text};
+    outline: ${({ theme }) => theme.focusRing.outline};
+    outline-offset: ${({ theme }) => theme.focusRing.offset};
   }
 `;
 

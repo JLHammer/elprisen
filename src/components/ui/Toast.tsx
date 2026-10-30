@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import styled from "styled-components";
+import { TextButton } from "./TextButton";
+import { card } from "../../styles/card";
 
 // Fixed at the bottom so several toasts stack upwards instead of overlapping
 export const ToastStack = styled.div`
@@ -21,30 +23,13 @@ const ToastStyled = styled.div`
   align-items: center;
   gap: 1rem;
   padding: 0.75rem 1rem;
-  border-radius: 0.25rem;
-  background-color: ${({ theme }) => theme.colors.backgroundDark};
-  box-shadow: ${({ theme }) => theme.boxShadows.outer(10)};
+  ${card}
   font-size: 0.9rem;
   pointer-events: auto;
 `;
 
-const CloseButton = styled.button`
+const CloseButton = styled(TextButton)`
   flex-shrink: 0;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  color: ${({ theme }) => theme.colors.primary};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  text-transform: uppercase;
-  cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.text};
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.primary};
-    outline-offset: 2px;
-  }
 `;
 
 export const Toast = ({ children, onClose }: { children: ReactNode; onClose: () => void }) => (

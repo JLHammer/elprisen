@@ -31,6 +31,17 @@ export const borderGradients = {
     )`,
 } as const;
 
+// Keyboard focus outline, GlobalStyle gives it to every focusable element
+export const focusRing = {
+  outline: `0.125rem solid ${colors.primary}`,
+  offset: "0.125rem",
+} as const;
+
+// Fades the given properties on hover, e.g. hover("color", "box-shadow")
+export const transitions = {
+  hover: (...properties: string[]) => properties.map((property) => `${property} 0.15s`).join(", "),
+} as const;
+
 export const fonts = {
   roboto: '"Roboto", sans-serif',
 } as const;
@@ -57,6 +68,8 @@ export const theme = {
   priceColors,
   boxShadows,
   borderGradients,
+  focusRing,
+  transitions,
   fonts,
   fontWeights,
   mediaQueries,

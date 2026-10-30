@@ -14,6 +14,11 @@ const globalStyles = css`
     color: ${({ theme }) => theme.colors.text};
   }
 
+  :focus-visible {
+    outline: ${({ theme }) => theme.focusRing.outline};
+    outline-offset: ${({ theme }) => theme.focusRing.offset};
+  }
+
   section {
     width: 100%;
   }

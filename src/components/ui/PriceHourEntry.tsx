@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import type { ElectricityPrice } from "../../types/api";
 import { formatPrice, formatTime } from "../../utils/format";
+import { card } from "../../styles/card";
 
 const PriceHourEntryStyled = styled.div<{ $current: boolean }>`
   width: 100%;
@@ -8,8 +9,8 @@ const PriceHourEntryStyled = styled.div<{ $current: boolean }>`
   justify-content: center;
   gap: 6.4rem;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.backgroundDark};
-  border-radius: 0.25rem;
+  ${card}
+  /* The current hour glows brighter than the card's shadow */
   box-shadow: ${({ theme, $current }) => theme.boxShadows.outer($current ? 30 : 10)};
   outline: ${({ theme, $current }) => ($current ? `1px solid ${theme.colors.primary}` : "none")};
   font-weight: ${({ theme, $current }) => ($current ? theme.fontWeights.bold : "inherit")};

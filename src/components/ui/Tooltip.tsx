@@ -2,6 +2,7 @@ import { useId, type ReactNode } from "react";
 import styled from "styled-components";
 import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
 import { Icon } from "./Icon";
+import { card } from "../../styles/card";
 
 type TooltipAnchor = "trigger" | "container";
 
@@ -19,17 +20,13 @@ const Bubble = styled.div`
   z-index: 1;
   width: min(16rem, calc(100vw - 2rem));
   padding: 0.75rem;
-  border-radius: 0.25rem;
-  background-color: ${({ theme }) => theme.colors.backgroundDark};
-  box-shadow: ${({ theme }) => theme.boxShadows.outer(10)};
+  ${card}
   font-size: 0.9rem;
   line-height: 1.4;
   text-align: left;
   visibility: hidden;
   opacity: 0;
-  transition:
-    opacity 0.15s,
-    visibility 0.15s;
+  transition: ${({ theme }) => theme.transitions.hover("opacity", "visibility")};
 `;
 
 const TooltipStyled = styled.span<{ $anchor: TooltipAnchor }>`
@@ -46,6 +43,7 @@ const Trigger = styled.button`
   display: flex;
   color: ${({ theme }) => theme.colors.text};
   cursor: help;
+  transition: ${({ theme }) => theme.transitions.hover("color")};
 
   &:hover,
   &:focus-visible {
