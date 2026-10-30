@@ -3,6 +3,11 @@ import styled from "styled-components";
 import { TextButton } from "./TextButton";
 import { card } from "../../styles/card";
 
+type ToastProps = {
+  children: ReactNode;
+  onClose: () => void;
+};
+
 // Fixed at the bottom so several toasts stack upwards instead of overlapping
 export const ToastStack = styled.div`
   position: fixed;
@@ -32,7 +37,7 @@ const CloseButton = styled(TextButton)`
   flex-shrink: 0;
 `;
 
-export const Toast = ({ children, onClose }: { children: ReactNode; onClose: () => void }) => (
+export const Toast = ({ children, onClose }: ToastProps) => (
   <ToastStyled role="status">
     <p>{children}</p>
     <CloseButton type="button" onClick={onClose}>

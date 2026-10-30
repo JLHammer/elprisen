@@ -2,6 +2,10 @@ import { useEffect, useState, type ReactNode } from "react";
 import { SettingsContext, defaultSettings, type Settings } from "./SettingsContext";
 import { readStorage, writeStorage } from "../utils/storage";
 
+type SettingsProviderProps = {
+  children: ReactNode;
+};
+
 const STORAGE_KEY = "elprisen-settings";
 
 const loadSettings = (): Settings => {
@@ -16,7 +20,7 @@ const loadSettings = (): Settings => {
   }
 };
 
-export const SettingsProvider = ({ children }: { children: ReactNode }) => {
+export const SettingsProvider = ({ children }: SettingsProviderProps) => {
   const [settings, setSettings] = useState(loadSettings);
 
   useEffect(() => {

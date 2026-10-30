@@ -1,3 +1,5 @@
+// A CSS reset, trimmed down from Tailwind's preflight
+
 import { css } from "styled-components";
 
 const fontSans = `ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,

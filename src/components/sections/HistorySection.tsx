@@ -95,6 +95,7 @@ export const HistorySection = () => {
   return (
     <HistoryStyled>
       <DatePicker>
+        {/* Shows the selected date in the date picker as "DD-MM-YYYY" */}
         <DateText>{formatDate(date)}</DateText>
         <Icon icon={faCalendarAlt} size="1.4rem" />
         <DateInput
@@ -107,6 +108,7 @@ export const HistorySection = () => {
           onClick={(e) => e.currentTarget.showPicker?.()}
         />
       </DatePicker>
+      {/* Puts the selected date in the heading, e.g. "Elpriserne d. 30-10-2026" */}
       <Heading>Elpriserne d. {formatDate(date)}</Heading>
       {renderContent()}
     </HistoryStyled>

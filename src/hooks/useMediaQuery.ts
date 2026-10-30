@@ -1,5 +1,6 @@
 import { useCallback, useSyncExternalStore } from "react";
 
+// Whether the media query matches the current viewport size
 export const useMediaQuery = (query: string) => {
   const subscribe = useCallback(
     (onChange: () => void) => {
@@ -10,5 +11,8 @@ export const useMediaQuery = (query: string) => {
     [query],
   );
 
-  return useSyncExternalStore(subscribe, () => window.matchMedia(query).matches);
+  return useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(query).matches,
+  );
 };

@@ -33,6 +33,7 @@ export const PriceHourEntry = ({
   current = false,
 }: PriceHourEntryProps) => (
   <PriceHourEntryStyled $current={current} aria-current={current ? "time" : undefined}>
+    {/* Start time and price of the hour, e.g. "kl. 13.00" and "0.123 kr" */}
     <HourEntry>kl. {formatTime(time_start)}</HourEntry>
     <PriceEntry $level={level}>{formatKroner(DKK_per_kWh)}</PriceEntry>
   </PriceHourEntryStyled>

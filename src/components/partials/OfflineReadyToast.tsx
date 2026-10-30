@@ -1,7 +1,7 @@
 import { useRegisterSW } from "virtual:pwa-register/react";
 import { Toast } from "../ui/Toast";
 
-const updatePeriod = 60 * 60 * 1000;
+const UPDATE_PERIOD = 60 * 60 * 1000;
 
 export const OfflineReadyToast = () => {
   const {
@@ -19,9 +19,9 @@ export const OfflineReadyToast = () => {
 
           if (resp?.status === 200) await r.update();
         } catch {
-          // server unreachable, try again next interval
+          // Server unreachable, try again next interval
         }
-      }, updatePeriod);
+      }, UPDATE_PERIOD);
     },
   });
 

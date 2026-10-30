@@ -7,11 +7,7 @@ type IconProps = {
   size?: string;
 };
 
-type IconStyledProps = {
-  $size?: string;
-};
-
-const IconStyled = styled(FontAwesomeIcon)<IconStyledProps>`
+const IconStyled = styled(FontAwesomeIcon)<{ $size?: string }>`
   font-size: ${({ $size }) => $size ?? "1em"};
 `;
 
