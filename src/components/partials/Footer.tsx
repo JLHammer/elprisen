@@ -1,11 +1,6 @@
 import styled from "styled-components";
 import { useSettings } from "../../hooks/useSettings";
-import type { PriceArea } from "../../types/api";
-
-const AREA_LABELS: Record<PriceArea, string> = {
-  DK1: "Vest Danmark",
-  DK2: "Øst Danmark",
-};
+import { PRICE_AREAS } from "../../utils/priceArea";
 
 const FooterStyled = styled.footer`
   display: flex;
@@ -42,7 +37,7 @@ export const Footer = () => {
         )}
       </p>
       <p>
-        Du vises lige nu priserne for <Highlight>{AREA_LABELS[area]}</Highlight>
+        Du vises lige nu priserne for <Highlight>{PRICE_AREAS[area].name}</Highlight>
       </p>
     </FooterStyled>
   );
