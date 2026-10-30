@@ -2,7 +2,7 @@ import { Fragment, useId, useState } from "react";
 import styled from "styled-components";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useUpcomingPrices } from "../../hooks/useUpcomingPrices";
-import { formatPrice, formatTime } from "../../utils/format";
+import { formatTime } from "../../utils/format";
 import { getHighestPrice, getLowestPrice } from "../../utils/priceRange";
 import { Icon } from "../ui/Icon";
 import { PriceCircle } from "../ui/PriceCircle";
@@ -24,23 +24,6 @@ const PriceExtremesContainer = styled.div`
   align-items: center;
   gap: 0.25rem;
   margin-bottom: 2rem;
-`;
-
-const Price = styled.p`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-transform: uppercase;
-  line-height: 1;
-  gap: 0.25rem;
-`;
-
-const Amount = styled.span`
-  font-size: 1.1rem;
-`;
-
-const Unit = styled.span`
-  font-size: 0.7rem;
 `;
 
 const Label = styled.p`
@@ -124,12 +107,7 @@ export const OverviewSection = () => {
         <OverviewStyled>
           {extremes.map(({ label, price }) => (
             <PriceExtremesContainer key={label}>
-              <PriceCircle variant="small">
-                <Price>
-                  <Amount>{formatPrice(price.DKK_per_kWh)} kr</Amount>
-                  <Unit>pr. kWh</Unit>
-                </Price>
-              </PriceCircle>
+              <PriceCircle variant="small" price={price.DKK_per_kWh} />
               <Label>{label}</Label>
               <SlotTime>
                 {price.isTomorrow && "I morgen "}kl. {formatTime(price.time_start)}

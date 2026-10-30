@@ -9,7 +9,7 @@ const timeFormatter = new Intl.DateTimeFormat("da-DK", {
   minute: "2-digit",
 });
 
-export const formatPrice = (price: number) => priceFormatter.format(price);
+const formatPrice = (price: number) => priceFormatter.format(price);
 
 // Converts a price to kroner text, e.g. "0.123 kr"
 export const formatKroner = (price: number) => `${formatPrice(price)} kr`;

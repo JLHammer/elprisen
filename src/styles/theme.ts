@@ -23,11 +23,11 @@ export const boxShadows = {
 } as const;
 
 export const borderGradients = {
-  inner: (strength: number, width = "0.5rem") =>
+  inner: (strength: number, background: string = colors.backgroundDark, width = "0.5rem") =>
     `radial-gradient(
       closest-side,
-      ${colors.backgroundDark} calc(100% - ${width}),
-      color-mix(in srgb, ${colors.text} ${strength}%, ${colors.backgroundDark})
+      ${background} calc(100% - ${width}),
+      color-mix(in srgb, ${colors.text} ${strength}%, ${background})
     )`,
 } as const;
 
