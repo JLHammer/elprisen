@@ -1,10 +1,9 @@
 import { Fragment, useId, useState } from "react";
 import styled from "styled-components";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useUpcomingPrices } from "../../hooks/useUpcomingPrices";
 import { formatTime } from "../../utils/format";
 import { getHighestPrice, getLowestPrice } from "../../utils/priceRange";
-import { Icon } from "../ui/Icon";
+import { ExpandToggle } from "../ui/ExpandToggle";
 import { PriceCircle } from "../ui/PriceCircle";
 import { PriceHourEntry } from "../ui/PriceHourEntry";
 import { renderPriceStatus } from "../ui/priceStatus";
@@ -55,28 +54,6 @@ const EarlierList = styled.div`
   }
 `;
 
-const ExpandButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: 0.9rem;
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  text-transform: uppercase;
-  cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.text};
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.primary};
-    outline-offset: 2px;
-  }
-`;
-
 const DayDivider = styled.p`
   margin-top: 1rem;
   font-size: 0.9rem;
@@ -118,15 +95,14 @@ export const OverviewSection = () => {
         <PriceHourList id={laterId}>
           {earlierPrices.length > 0 && (
             <>
-              <ExpandButton
-                type="button"
-                aria-expanded={showEarlier}
-                aria-controls={earlierId}
-                onClick={() => setShowEarlier(!showEarlier)}
-              >
-                <Icon icon={showEarlier ? faChevronDown : faChevronUp} />
-                {showEarlier ? "Skjul tidligere" : "Se tidligere"}
-              </ExpandButton>
+              <ExpandToggle
+                expanded={showEarlier}
+                controls={earlierId}
+                opens="up"
+                showLabel="Se tidligere"
+                hideLabel="Skjul tidligere"
+                onToggle={() => setShowEarlier(!showEarlier)}
+              />
               <EarlierList id={earlierId} hidden={!showEarlier}>
                 {earlierPrices.map((price) => (
                   <PriceHourEntry key={price.time_start} price={price} />
@@ -143,15 +119,14 @@ export const OverviewSection = () => {
             </Fragment>
           ))}
           {prices.length > VISIBLE_HOURS && (
-            <ExpandButton
-              type="button"
-              aria-expanded={showLater}
-              aria-controls={laterId}
-              onClick={() => setShowLater(!showLater)}
-            >
-              <Icon icon={showLater ? faChevronUp : faChevronDown} />
-              {showLater ? "Skjul fremtidige" : "Se fremtidige"}
-            </ExpandButton>
+            <ExpandToggle
+              expanded={showLater}
+              controls={laterId}
+              opens="down"
+              showLabel="Se fremtidige"
+              hideLabel="Skjul fremtidige"
+              onToggle={() => setShowLater(!showLater)}
+            />
           )}
         </PriceHourList>
       </>

@@ -1,7 +1,6 @@
 import { useId, useState, type KeyboardEvent } from "react";
 import styled from "styled-components";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { Icon } from "./Icon";
+import { ExpandIcon } from "./ExpandIcon";
 
 type DropdownOption<T extends string> = {
   value: T;
@@ -33,7 +32,7 @@ const Trigger = styled.button<{ $open: boolean }>`
   text-transform: inherit;
 `;
 
-const ChevronStyled = styled.span`
+const Chevron = styled.span`
   display: flex;
   color: ${({ theme }) => theme.colors.primary};
 `;
@@ -127,9 +126,9 @@ export const Dropdown = <T extends string>({
         onKeyDown={handleKeyDown}
       >
         {placeholder}
-        <ChevronStyled>
-          <Icon icon={open ? faChevronUp : faChevronDown} />
-        </ChevronStyled>
+        <Chevron>
+          <ExpandIcon expanded={open} opens="down" />
+        </Chevron>
       </Trigger>
       <OptionList id={listId} role="listbox" hidden={!open}>
         {options.map((option, index) => (
