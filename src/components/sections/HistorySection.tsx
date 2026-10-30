@@ -7,10 +7,11 @@ import {
 import { useHistoryDate } from "../../hooks/useHistoryDate";
 import { getDanishDate } from "../../utils/danishTime";
 import { formatDate } from "../../utils/format";
-import { getPriceLevels } from "../../utils/priceLevel";
+import { withPriceLevels } from "../../utils/priceLevel";
 import { card } from "../../styles/card";
 import { Icon } from "../ui/Icon";
 import { PriceHourEntry } from "../ui/PriceHourEntry";
+import { renderPriceStatus } from "../ui/priceStatus";
 
 const HistoryStyled = styled.div`
   width: 85%;
@@ -79,18 +80,13 @@ export const HistorySection = () => {
   );
 
   const renderContent = () => {
-    if (loading) return <p>Henter elpriser…</p>;
-    if (error) return <p role="alert">{error}</p>;
-
-    const levels = getPriceLevels(prices);
+    const status = renderPriceStatus(loading, error);
+    if (status) return status;
 
     return (
       <PriceHourList>
-        {prices.map((price, index) => (
-          <PriceHourEntry
-            key={price.time_start}
-            price={{ ...price, level: levels[index] }}
-          />
+        {withPriceLevels(prices).map((price) => (
+          <PriceHourEntry key={price.time_start} price={price} />
         ))}
       </PriceHourList>
     );

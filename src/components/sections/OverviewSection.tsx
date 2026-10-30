@@ -7,6 +7,7 @@ import { getHighestPrice, getLowestPrice } from "../../utils/priceRange";
 import { Icon } from "../ui/Icon";
 import { PriceCircle } from "../ui/PriceCircle";
 import { PriceHourEntry } from "../ui/PriceHourEntry";
+import { renderPriceStatus } from "../ui/priceStatus";
 
 // Hours shown before "Se fremtidige" opens the rest
 const VISIBLE_HOURS = 8;
@@ -107,8 +108,8 @@ export const OverviewSection = () => {
   const [showLater, setShowLater] = useState(false);
 
   const renderContent = () => {
-    if (loading) return <p>Henter elpriser…</p>;
-    if (error) return <p role="alert">{error}</p>;
+    const status = renderPriceStatus(loading, error);
+    if (status) return status;
     if (prices.length === 0) return <p>Der er ingen kommende priser</p>;
 
     const extremes = [

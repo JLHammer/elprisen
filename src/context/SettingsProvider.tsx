@@ -1,12 +1,16 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { SettingsContext, defaultSettings, type Settings } from "./SettingsContext";
+import { readStorage, writeStorage } from "../utils/storage";
 
 const STORAGE_KEY = "elprisen-settings";
 
 const loadSettings = (): Settings => {
+  const saved = readStorage(STORAGE_KEY);
+  if (!saved) return defaultSettings;
+
+  // Falls back to the defaults if the saved value is corrupt
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? { ...defaultSettings, ...JSON.parse(saved) } : defaultSettings;
+    return { ...defaultSettings, ...JSON.parse(saved) };
   } catch {
     return defaultSettings;
   }
@@ -16,11 +20,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
   const [settings, setSettings] = useState(loadSettings);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    } catch {
-      // Storage unavailable (e.g. private mode), settings only last for this session
-    }
+    writeStorage(STORAGE_KEY, JSON.stringify(settings));
   }, [settings]);
 
   const updateSettings = (changes: Partial<Settings>) => {

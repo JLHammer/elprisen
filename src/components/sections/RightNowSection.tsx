@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { useElectricityPrices } from "../../hooks/useElectricityPrices";
 import { useNow } from "../../hooks/useNow";
 import { formatPrice, formatTime } from "../../utils/format";
+import { isCurrentPrice } from "../../utils/priceSlot";
 import { PriceCircle } from "../ui/PriceCircle";
+import { renderPriceStatus } from "../ui/priceStatus";
 
 const RightNowStyled = styled.div`
   display: flex;
@@ -37,16 +39,11 @@ export const RightNowSection = () => {
   const now = useNow();
   const { prices, loading, error } = useElectricityPrices(now);
 
-  const nowTime = now.getTime();
-  const currentPrice = prices.find(
-    ({ time_start, time_end }) =>
-      new Date(time_start).getTime() <= nowTime &&
-      nowTime < new Date(time_end).getTime(),
-  );
+  const currentPrice = prices.find((price) => isCurrentPrice(price, now));
 
   const renderContent = () => {
-    if (loading) return <p>Henter elpriser…</p>;
-    if (error) return <p role="alert">{error}</p>;
+    const status = renderPriceStatus(loading, error);
+    if (status) return status;
     if (!currentPrice)
       return <p>Der er ingen pris for det nuværende tidspunkt</p>;
 

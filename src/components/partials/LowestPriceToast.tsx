@@ -2,21 +2,16 @@ import { useState } from "react";
 import { useElectricityPrices } from "../../hooks/useElectricityPrices";
 import { useNow } from "../../hooks/useNow";
 import { useSettings } from "../../hooks/useSettings";
-import { formatPrice, formatTime } from "../../utils/format";
+import { formatKroner, formatTime } from "../../utils/format";
+import { getLowestPrice } from "../../utils/priceRange";
+import { getPriceSlot, hasPriceEnded } from "../../utils/priceSlot";
+import { readStorage, writeStorage } from "../../utils/storage";
 import { Toast } from "../ui/Toast";
 
+// Remembers the closed hour so the toast stays closed across reloads
 const STORAGE_KEY = "elprisen-dismissed-alarm";
 
 const LEAD_TIME = 15 * 60 * 1000;
-
-// Remembers the closed hour so the toast stays closed across reloads
-const loadDismissed = () => {
-  try {
-    return localStorage.getItem(STORAGE_KEY);
-  } catch {
-    return null;
-  }
-};
 
 export const LowestPriceToast = () => {
   const {
@@ -24,33 +19,31 @@ export const LowestPriceToast = () => {
   } = useSettings();
   const now = useNow();
   const { prices } = useElectricityPrices(now);
-  const [dismissed, setDismissed] = useState(loadDismissed);
+  const [dismissed, setDismissed] = useState(() => readStorage(STORAGE_KEY));
 
   if (!notifications || prices.length === 0) return null;
 
-  const cheapest = prices.reduce((min, price) => (price.DKK_per_kWh < min.DKK_per_kWh ? price : min));
-  const start = new Date(cheapest.time_start).getTime();
-  const end = new Date(cheapest.time_end).getTime();
+  const cheapest = getLowestPrice(prices);
+  const { start } = getPriceSlot(cheapest);
   const nowTime = now.getTime();
 
-  if (dismissed === cheapest.time_start || nowTime < start - LEAD_TIME || nowTime >= end) return null;
+  if (dismissed === cheapest.time_start || nowTime < start - LEAD_TIME || hasPriceEnded(cheapest, now))
+    return null;
 
   const dismiss = () => {
     setDismissed(cheapest.time_start);
-    try {
-      localStorage.setItem(STORAGE_KEY, cheapest.time_start);
-    } catch {
-      // Storage unavailable (e.g. private mode), the toast only stays closed for this session
-    }
+    writeStorage(STORAGE_KEY, cheapest.time_start);
   };
 
-  const price = `${formatPrice(cheapest.DKK_per_kWh)} kr/kWh`;
+  // The cheapest price as text for the toast, e.g. "0.123 kr pr. kWh"
+  const price = `${formatKroner(cheapest.DKK_per_kWh)} pr. kWh`;
 
   return (
     <Toast onClose={dismiss}>
+      {/* formatTime shows when the cheapest hour starts, and also when it ends once it has begun */}
       {nowTime < start
         ? `Dagens billigste time starter om ${Math.ceil((start - nowTime) / 60000)}\u00a0min, kl. ${formatTime(cheapest.time_start)} (${price})`
-        : `Det er nu dagens billigste time, kl. ${formatTime(cheapest.time_start)}–${formatTime(cheapest.time_end)} (${price})`}
+        : `Det er nu dagens billigste time, kl. ${formatTime(cheapest.time_start)} - ${formatTime(cheapest.time_end)} (${price})`}
     </Toast>
   );
 };

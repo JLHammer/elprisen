@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import type { ElectricityPrice } from "../../types/api";
-import { formatPrice, formatTime } from "../../utils/format";
+import { formatKroner, formatTime } from "../../utils/format";
 import { card } from "../../styles/card";
 
 const PriceHourEntryStyled = styled.div<{ $current: boolean }>`
@@ -34,6 +34,6 @@ export const PriceHourEntry = ({
 }: PriceHourEntryProps) => (
   <PriceHourEntryStyled $current={current} aria-current={current ? "time" : undefined}>
     <HourEntry>kl. {formatTime(time_start)}</HourEntry>
-    <PriceEntry $level={level}>{formatPrice(DKK_per_kWh)} kr</PriceEntry>
+    <PriceEntry $level={level}>{formatKroner(DKK_per_kWh)}</PriceEntry>
   </PriceHourEntryStyled>
 );
