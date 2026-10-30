@@ -1,9 +1,7 @@
-import styled from "styled-components";
 import { useRegisterSW } from "virtual:pwa-register/react";
+import { Toast } from "../ui/Toast";
 
 const updatePeriod = 60 * 60 * 1000;
-
-const ToastStyled = styled.div``;
 
 export const OfflineReadyToast = () => {
   const {
@@ -29,12 +27,5 @@ export const OfflineReadyToast = () => {
 
   if (!offlineReady) return null;
 
-  return (
-    <ToastStyled role="status">
-      <p>Appen er klar til at blive brugt offline</p>
-      <button type="button" onClick={() => setOfflineReady(false)}>
-        Luk
-      </button>
-    </ToastStyled>
-  );
+  return <Toast onClose={() => setOfflineReady(false)}>Appen er klar til at blive brugt offline</Toast>;
 };
