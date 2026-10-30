@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { NavLink } from "react-router";
 import { NAV_LINKS } from "../../router/routes";
 
-const NavbarStyled = styled.nav`
+const NavBarStyled = styled.nav`
   display: flex;
-  gap: 1rem;
+  gap: 0.25rem;
   justify-content: space-between;
 `;
 
@@ -12,6 +12,7 @@ const MenuLink = styled(NavLink)`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.text};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
+  text-transform: uppercase;
   padding: 0.5rem;
   border-radius: 0.25rem;
 
@@ -22,12 +23,12 @@ const MenuLink = styled(NavLink)`
 
 export const NavBar = () => {
   return (
-    <NavbarStyled aria-label="Hovedmenu">
+    <NavBarStyled aria-label="Hovedmenu">
       {NAV_LINKS.map(({ path, label }) => (
         <MenuLink key={path} to={path} end>
           {label}
         </MenuLink>
       ))}
-    </NavbarStyled>
+    </NavBarStyled>
   );
 };

@@ -6,8 +6,8 @@ const FooterStyled = styled.footer`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.4rem 2.5rem 1.5rem;
-  font-size: 0.9rem;
+  padding: 1.5rem 1rem;
+  font-size: 1rem;
   line-height: normal;
   text-align: center;
   background: ${({ theme }) => theme.colors.backgroundDark};
@@ -37,7 +37,8 @@ export const Footer = () => {
         )}
       </p>
       <p>
-        Du vises lige nu priserne for <Highlight>{PRICE_AREAS[area].name}</Highlight>
+        Du vises lige nu priserne for{" "}
+        <Highlight>{PRICE_AREAS[area].name}</Highlight>
       </p>
     </FooterStyled>
   );
