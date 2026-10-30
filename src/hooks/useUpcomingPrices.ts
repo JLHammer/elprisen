@@ -16,9 +16,11 @@ export const useUpcomingPrices = () => {
   const tomorrow = useElectricityPrices(now, 1);
 
   const nowTime = now.getTime();
-  const prices = [...withLevels(today.prices, false), ...withLevels(tomorrow.prices, true)].filter(
-    ({ time_end }) => new Date(time_end).getTime() > nowTime,
-  );
+  const isUpcoming = ({ time_end }: ElectricityPrice) => new Date(time_end).getTime() > nowTime;
+  const todayPrices = withLevels(today.prices, false);
 
-  return { prices, loading: today.loading, error: today.error };
+  const prices = [...todayPrices, ...withLevels(tomorrow.prices, true)].filter(isUpcoming);
+  const earlierPrices = todayPrices.filter((price) => !isUpcoming(price));
+
+  return { prices, earlierPrices, loading: today.loading, error: today.error };
 };

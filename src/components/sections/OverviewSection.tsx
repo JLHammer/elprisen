@@ -1,10 +1,15 @@
-import { Fragment } from "react";
+import { Fragment, useId, useState } from "react";
 import styled from "styled-components";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useUpcomingPrices } from "../../hooks/useUpcomingPrices";
 import { formatPrice, formatTime } from "../../utils/format";
 import { getHighestPrice, getLowestPrice } from "../../utils/priceRange";
+import { Icon } from "../ui/Icon";
 import { PriceCircle } from "../ui/PriceCircle";
 import { PriceHourEntry } from "../ui/PriceHourEntry";
+
+// Hours shown before "Se fremtidige" opens the rest
+const VISIBLE_HOURS = 8;
 
 const OverviewStyled = styled.div`
   display: flex;
@@ -54,6 +59,40 @@ const PriceHourList = styled.div`
   gap: 0.5rem;
 `;
 
+const EarlierList = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  opacity: 0.5;
+
+  &[hidden] {
+    display: none;
+  }
+`;
+
+const ExpandButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: 0.9rem;
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 2px;
+  }
+`;
+
 const DayDivider = styled.p`
   margin-top: 1rem;
   font-size: 0.9rem;
@@ -61,7 +100,11 @@ const DayDivider = styled.p`
 `;
 
 export const OverviewSection = () => {
-  const { prices, loading, error } = useUpcomingPrices();
+  const earlierId = useId();
+  const laterId = useId();
+  const { prices, earlierPrices, loading, error } = useUpcomingPrices();
+  const [showEarlier, setShowEarlier] = useState(false);
+  const [showLater, setShowLater] = useState(false);
 
   const renderContent = () => {
     if (loading) return <p>Henter elpriser…</p>;
@@ -72,6 +115,8 @@ export const OverviewSection = () => {
       { label: "Laveste pris", price: getLowestPrice(prices) },
       { label: "Højeste pris", price: getHighestPrice(prices) },
     ];
+
+    const visiblePrices = showLater ? prices : prices.slice(0, VISIBLE_HOURS);
 
     return (
       <>
@@ -91,15 +136,44 @@ export const OverviewSection = () => {
             </PriceExtremesContainer>
           ))}
         </OverviewStyled>
-        <PriceHourList>
-          {prices.map((price, index) => (
+        <PriceHourList id={laterId}>
+          {earlierPrices.length > 0 && (
+            <>
+              <ExpandButton
+                type="button"
+                aria-expanded={showEarlier}
+                aria-controls={earlierId}
+                onClick={() => setShowEarlier(!showEarlier)}
+              >
+                <Icon icon={showEarlier ? faChevronDown : faChevronUp} />
+                {showEarlier ? "Skjul tidligere" : "Se tidligere"}
+              </ExpandButton>
+              <EarlierList id={earlierId} hidden={!showEarlier}>
+                {earlierPrices.map((price) => (
+                  <PriceHourEntry key={price.time_start} price={price} />
+                ))}
+              </EarlierList>
+            </>
+          )}
+          {visiblePrices.map((price, index) => (
             <Fragment key={price.time_start}>
-              {price.isTomorrow && !prices[index - 1]?.isTomorrow && (
+              {price.isTomorrow && !visiblePrices[index - 1]?.isTomorrow && (
                 <DayDivider>I morgen</DayDivider>
               )}
               <PriceHourEntry price={price} current={index === 0} />
             </Fragment>
           ))}
+          {prices.length > VISIBLE_HOURS && (
+            <ExpandButton
+              type="button"
+              aria-expanded={showLater}
+              aria-controls={laterId}
+              onClick={() => setShowLater(!showLater)}
+            >
+              <Icon icon={showLater ? faChevronUp : faChevronDown} />
+              {showLater ? "Skjul fremtidige" : "Se fremtidige"}
+            </ExpandButton>
+          )}
         </PriceHourList>
       </>
     );
