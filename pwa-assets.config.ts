@@ -1,6 +1,7 @@
 import { defineConfig } from "@vite-pwa/assets-generator/config";
+import { colors } from "./src/styles/theme";
 
-const background = "#27282B";
+const background = colors.backgroundDark;
 
 export default defineConfig({
   preset: {
