@@ -1,29 +1,44 @@
 import styled from "styled-components";
 import { NavLink } from "react-router";
-import { ROUTES } from "../../router/routes";
+import { HOME } from "../../router/routes";
+
+const SITE_TITLE = "ElPrisen.nu";
 
 type LogoProps = {
   size?: string;
 };
 
-type LogoImageProps = {
-  $size?: string;
-};
-
 const LogoLinkStyled = styled(NavLink)`
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  text-decoration: none;
 `;
 
-const LogoImage = styled.img<LogoImageProps>`
+// Mobile has no room for it next to the navbar
+const SiteName = styled.span`
+  display: none;
+  color: ${({ theme }) => theme.colors.primary};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+
+  @media ${({ theme }) => theme.mediaQueries.tablet} {
+    display: inline;
+  }
+`;
+
+const LogoImage = styled.img<{ $size?: string }>`
   flex-shrink: 0;
   width: ${({ $size }) => $size ?? "clamp(3.5rem, 10vw, 7.5rem)"};
 `;
 
 export const Logo = ({ size }: LogoProps) => {
   return (
-    <LogoLinkStyled to={ROUTES.rightNow} aria-label="Hjem">
+    // The label starts with the visible title, so voice control users can say what they see
+    <LogoLinkStyled to={HOME} aria-label={`${SITE_TITLE}, forside`}>
       {/* Same file as the favicon, the PWA icons are generated from it */}
       <LogoImage src="/favicon.svg" alt="Elprisen logo" $size={size} />
+      <SiteName>{SITE_TITLE}</SiteName>
     </LogoLinkStyled>
   );
 };

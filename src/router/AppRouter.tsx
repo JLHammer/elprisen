@@ -9,7 +9,7 @@ import {
   NotFoundPage,
 } from "../pages";
 import { MainLayout } from "../components/layout/MainLayout";
-import { useIsDesktop } from "../hooks/useBreakpoints";
+import { useIsDesktop, useIsTabletUp } from "../hooks/useBreakpoints";
 
 const { overview, rightNow, history, settings, notFound } = ROUTES;
 
@@ -20,6 +20,7 @@ const RedirectToDashboard = () => {
 };
 
 export const AppRouter = () => {
+  const isTabletUp = useIsTabletUp();
   const isDesktop = useIsDesktop();
 
   return (
@@ -44,7 +45,13 @@ export const AppRouter = () => {
             <Route path={history} element={<HistoryPage />} />
           </>
         )}
-        <Route path={settings} element={<SettingsPage />} />
+        <Route
+          path={settings}
+          element={
+            // Tablet and up show settings in a modal instead of on a page
+            isTabletUp ? <Navigate to={HOME} replace /> : <SettingsPage />
+          }
+        />
         <Route path={notFound} element={<NotFoundPage />} />
       </Route>
     </Routes>

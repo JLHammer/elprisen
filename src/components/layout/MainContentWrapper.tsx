@@ -1,11 +1,7 @@
 import { useId, type ReactNode } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { Icon } from "../ui/Icon";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { mediaQueries } from "../../styles/theme";
-import { ROUTES } from "../../router/routes";
+import { SettingsButton } from "../partials/SettingsButton";
+import { useIsTabletUp } from "../../hooks/useBreakpoints";
 
 const SITE_NAME = "Elprisen";
 
@@ -55,16 +51,10 @@ const Heading = styled.h1`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-const SettingsButton = styled.button`
+const SettingsCorner = styled.div`
   position: absolute;
   top: 0.5rem;
   right: 0.25rem;
-  color: ${({ theme }) => theme.colors.text};
-  cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary};
-  }
 `;
 
 export const MainContentWrapper = ({
@@ -75,25 +65,19 @@ export const MainContentWrapper = ({
   children,
 }: MainContentWrapperProps) => {
   const headingId = useId();
-  const navigate = useNavigate();
-  const isTabletUp = useMediaQuery(mediaQueries.tablet);
-
-  const handleSettingsClick = isTabletUp
-    ? undefined
-    : () => navigate(ROUTES.settings);
+  // Tablet and up have the settings button in the header instead
+  const isTabletUp = useIsTabletUp();
 
   return (
     <>
       {title && <title>{`${SITE_NAME} | ${title}`}</title>}
 
       <WrapperStyled aria-labelledby={headingId}>
-        <SettingsButton
-          type="button"
-          aria-label="Indstillinger"
-          onClick={handleSettingsClick}
-        >
-          <Icon icon={faCog} size="1.5rem" />
-        </SettingsButton>
+        {!isTabletUp && (
+          <SettingsCorner>
+            <SettingsButton />
+          </SettingsCorner>
+        )}
         <HeadingRow $spacing={headingSpacing}>
           <Heading id={headingId}>{heading}</Heading>
           {headingExtra && <HeadingExtra>{headingExtra}</HeadingExtra>}

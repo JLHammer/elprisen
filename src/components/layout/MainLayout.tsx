@@ -3,8 +3,9 @@ import { Outlet } from "react-router";
 import { Header } from "../partials/Header";
 import { Footer } from "../partials/Footer";
 import { NavBar } from "../partials/NavBar";
+import { SettingsButton } from "../partials/SettingsButton";
 import { Logo } from "../ui/Logo";
-import { useIsDesktop } from "../../hooks/useBreakpoints";
+import { useIsDesktop, useIsTabletUp } from "../../hooks/useBreakpoints";
 
 // Fills the screen, so the footer sits at the bottom on pages with little content
 const MainLayoutStyled = styled.div`
@@ -27,6 +28,7 @@ const Main = styled.main`
 `;
 
 export const MainLayout = () => {
+  const isTabletUp = useIsTabletUp();
   const isDesktop = useIsDesktop();
 
   return (
@@ -35,6 +37,8 @@ export const MainLayout = () => {
         <Logo size="3rem" />
         {/* Desktop shows every section on one page, so there is nothing to navigate to */}
         {!isDesktop && <NavBar />}
+        {/* Mobile has the settings button on the page instead */}
+        {isTabletUp && <SettingsButton />}
       </Header>
 
       <Main>
