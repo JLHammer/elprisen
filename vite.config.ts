@@ -20,11 +20,19 @@ export default defineConfig({
         display: "standalone",
         theme_color: "#201E1E",
         background_color: "#27282B",
-        icons: [48, 72, 96, 144, 192, 512].map((size) => ({
-          src: `/icons/android/android-launchericon-${size}-${size}.png`,
-          sizes: `${size}x${size}`,
-          type: "image/png",
-        })),
+        icons: [
+          ...[48, 72, 96, 144, 192, 512].map((size) => ({
+            src: `/icons/android/android-launchericon-${size}-${size}.png`,
+            sizes: `${size}x${size}`,
+            type: "image/png",
+          })),
+          {
+            src: "/icons/android/maskable-icon-512-512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
+          },
+        ],
       },
 
       injectManifest: {
