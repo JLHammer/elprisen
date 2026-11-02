@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
 import {
   FIRST_DATE,
   useElectricityPrices,
@@ -8,8 +7,7 @@ import { useHistoryDate } from "../../hooks/useHistoryDate";
 import { getDanishDate } from "../../utils/danishTime";
 import { formatDate } from "../../utils/format";
 import { withPriceLevels } from "../../utils/priceLevel";
-import { card } from "../../styles/card";
-import { Icon } from "../ui/Icon";
+import { DatePicker } from "../ui/DatePicker";
 import { PriceHourEntry } from "../ui/PriceHourEntry";
 import { renderPriceStatus } from "../ui/priceStatus";
 
@@ -20,44 +18,9 @@ const HistoryStyled = styled.div`
   align-items: center;
 `;
 
-const DatePicker = styled.label`
-  position: relative;
+const HistoryDatePicker = styled(DatePicker)`
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1.8rem;
   margin-bottom: 3rem;
-  ${card}
-  border-radius: 0.5rem;
-  color: ${({ theme }) => theme.colors.primary};
-  cursor: pointer;
-  transition: ${({ theme }) => theme.transitions.hover("color", "box-shadow")};
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.text};
-    box-shadow: ${({ theme }) => theme.boxShadows.outer(20)};
-  }
-
-  /* The date input inside is invisible, so the label shows its focus instead */
-  &:focus-within {
-    color: ${({ theme }) => theme.colors.text};
-    outline: ${({ theme }) => theme.focusRing.outline};
-    outline-offset: ${({ theme }) => theme.focusRing.offset};
-  }
-`;
-
-const DateText = styled.span`
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const DateInput = styled.input`
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
 `;
 
 const Heading = styled.h2`
@@ -94,20 +57,13 @@ export const HistorySection = () => {
 
   return (
     <HistoryStyled>
-      <DatePicker>
-        {/* Shows the selected date in the date picker as "DD-MM-YYYY" */}
-        <DateText>{formatDate(date)}</DateText>
-        <Icon icon={faCalendarAlt} size="1.4rem" />
-        <DateInput
-          type="date"
-          aria-label="Vælg dato"
-          value={date}
-          min={FIRST_DATE}
-          max={getDanishDate(1)}
-          onChange={(e) => setDate(e.target.value)}
-          onClick={(e) => e.currentTarget.showPicker?.()}
-        />
-      </DatePicker>
+      <HistoryDatePicker
+        label="Vælg dato"
+        value={date}
+        min={FIRST_DATE}
+        max={getDanishDate(1)}
+        onChange={setDate}
+      />
       {/* Puts the selected date in the heading, e.g. "Elpriserne d. 30-10-2026" */}
       <Heading>Elpriserne d. {formatDate(date)}</Heading>
       {renderContent()}
