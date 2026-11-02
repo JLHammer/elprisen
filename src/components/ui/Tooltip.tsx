@@ -44,6 +44,9 @@ const Trigger = styled(IconButton)`
   cursor: help;
 `;
 
+// Lets the mouse cross the gap between the button and a bubble anchored to the container
+const HOVER_CLOSE_DELAY = 300;
+
 /*
   A toggletip: the button opens it, and a mouse hovering it shows it too.
   Escape, clicking outside and tabbing away close it
@@ -55,14 +58,38 @@ export const Tooltip = ({
 }: TooltipProps) => {
   const bubbleId = useId();
   const tooltipRef = useRef<HTMLSpanElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const bubbleRef = useRef<HTMLDivElement>(null);
   const [pinned, setPinned] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const hoverTimeout = useRef<number>(undefined);
   const open = pinned || hovered;
 
   const close = () => {
+    window.clearTimeout(hoverTimeout.current);
     setPinned(false);
     setHovered(false);
   };
+
+  // On the document, so Escape also closes a bubble the mouse opened without focusing anything
+  useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      // Focus inside the bubble would otherwise drop to the page as it hides
+      if (bubbleRef.current?.contains(document.activeElement))
+        triggerRef.current?.focus();
+      window.clearTimeout(hoverTimeout.current);
+      setPinned(false);
+      setHovered(false);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
+
+  useEffect(() => () => window.clearTimeout(hoverTimeout.current), []);
 
   // iOS Safari doesn't focus a tapped button, so a tap outside never blurs it
   useEffect(() => {
@@ -81,12 +108,21 @@ export const Tooltip = ({
       ref={tooltipRef}
       $anchor={anchor}
       // Only a real mouse, as touch fakes a hover that would keep it open after a second tap
-      onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
-      onPointerLeave={() => setHovered(false)}
-      onKeyDown={(e) => e.key === "Escape" && close()}
+      onPointerEnter={(e) => {
+        if (e.pointerType !== "mouse") return;
+        window.clearTimeout(hoverTimeout.current);
+        setHovered(true);
+      }}
+      onPointerLeave={() => {
+        hoverTimeout.current = window.setTimeout(
+          () => setHovered(false),
+          HOVER_CLOSE_DELAY,
+        );
+      }}
       onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && close()}
     >
       <Trigger
+        ref={triggerRef}
         type="button"
         aria-label={label}
         aria-expanded={open}
@@ -96,7 +132,7 @@ export const Tooltip = ({
         <Icon icon={faQuestionCircle} size="1.25rem" />
       </Trigger>
       {/* Focusable by clicking, so selecting its text doesn't count as leaving it */}
-      <Bubble id={bubbleId} tabIndex={-1} $open={open}>
+      <Bubble ref={bubbleRef} id={bubbleId} tabIndex={-1} $open={open}>
         {children}
       </Bubble>
     </TooltipStyled>
