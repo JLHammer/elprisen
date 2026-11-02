@@ -56,9 +56,10 @@ export const DatePicker = ({ label, value, min, max, onChange, className }: Date
     {/* Shows the selected date as "DD-MM-YYYY" */}
     <DateText>{formatDate(value)}</DateText>
     <Icon icon={faCalendarAlt} size="1.4rem" />
+    {/* The label starts with the visible date, so voice control users can say what they see */}
     <DateInput
       type="date"
-      aria-label={label}
+      aria-label={`${formatDate(value)}, ${label}`}
       value={value}
       min={min}
       max={max}

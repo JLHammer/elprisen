@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import styled from "styled-components";
 import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
 import { Icon } from "./Icon";
@@ -13,7 +13,7 @@ type TooltipProps = {
   children: ReactNode;
 };
 
-const Bubble = styled.div`
+const Bubble = styled.div<{ $open: boolean }>`
   position: absolute;
   top: 100%;
   left: 50%;
@@ -25,34 +25,69 @@ const Bubble = styled.div`
   font-size: 0.9rem;
   line-height: 1.4;
   text-align: left;
-  visibility: hidden;
-  opacity: 0;
+  visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
+  opacity: ${({ $open }) => ($open ? 1 : 0)};
   transition: ${({ theme }) => theme.transitions.hover("opacity", "visibility")};
 `;
 
 const TooltipStyled = styled.span<{ $anchor: TooltipAnchor }>`
   position: ${({ $anchor }) => ($anchor === "trigger" ? "relative" : "static")};
   display: inline-flex;
-
-  &:hover ${Bubble}, &:focus-within ${Bubble} {
-    visibility: visible;
-    opacity: 1;
-  }
 `;
 
 const Trigger = styled(IconButton)`
   cursor: help;
 `;
 
+/*
+  A toggletip: the button opens it, and a mouse hovering it shows it too.
+  Escape, clicking outside and tabbing away close it
+*/
 export const Tooltip = ({ label, anchor = "trigger", children }: TooltipProps) => {
   const bubbleId = useId();
+  const tooltipRef = useRef<HTMLSpanElement>(null);
+  const [pinned, setPinned] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const open = pinned || hovered;
+
+  const close = () => {
+    setPinned(false);
+    setHovered(false);
+  };
+
+  // iOS Safari doesn't focus a tapped button, so a tap outside never blurs it
+  useEffect(() => {
+    if (!pinned) return;
+
+    const handlePointerDown = (e: PointerEvent) => {
+      if (!tooltipRef.current?.contains(e.target as Node)) setPinned(false);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [pinned]);
 
   return (
-    <TooltipStyled $anchor={anchor}>
-      <Trigger type="button" aria-label={label} aria-describedby={bubbleId}>
+    <TooltipStyled
+      ref={tooltipRef}
+      $anchor={anchor}
+      // Only a real mouse, as touch fakes a hover that would keep it open after a second tap
+      onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+      onKeyDown={(e) => e.key === "Escape" && close()}
+      onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && close()}
+    >
+      <Trigger
+        type="button"
+        aria-label={label}
+        aria-expanded={open}
+        aria-controls={bubbleId}
+        onClick={() => setPinned(!pinned)}
+      >
         <Icon icon={faQuestionCircle} size="1.25rem" />
       </Trigger>
-      <Bubble id={bubbleId} role="tooltip">
+      {/* Focusable by clicking, so selecting its text doesn't count as leaving it */}
+      <Bubble id={bubbleId} tabIndex={-1} $open={open}>
         {children}
       </Bubble>
     </TooltipStyled>

@@ -8,7 +8,7 @@ import { getDanishDate } from "../../utils/danishTime";
 import { formatDate } from "../../utils/format";
 import { withPriceLevels } from "../../utils/priceLevel";
 import { DatePicker } from "../ui/DatePicker";
-import { PriceHourEntry } from "../ui/PriceHourEntry";
+import { PriceHourEntry, PriceHourList } from "../ui/PriceHourEntry";
 import { renderPriceStatus } from "../ui/priceStatus";
 
 const HistoryStyled = styled.div`
@@ -27,13 +27,6 @@ const Heading = styled.h2`
   margin-bottom: 1rem;
   font-size: 0.9rem;
   text-transform: uppercase;
-`;
-
-const PriceHourList = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 `;
 
 export const HistorySection = () => {

@@ -23,12 +23,15 @@ const PriceExtreme = styled.div`
   margin-bottom: 2rem;
 `;
 
+// Moved below the circle, which comes last in the markup so screen readers read the label first
 const Label = styled.p`
+  order: 1;
   font-size: 1rem;
   text-transform: uppercase;
 `;
 
 const SlotTime = styled.p`
+  order: 1;
   font-size: 0.9rem;
 `;
 
@@ -47,12 +50,12 @@ export const PriceExtremesSection = () => {
     <PriceExtremesStyled>
       {extremes.map(({ label, price }) => (
         <PriceExtreme key={label}>
-          <PriceCircle variant="small" price={price.DKK_per_kWh} />
           <Label>{label}</Label>
           {/* When that price starts, e.g. "kl. 13.00" or "I morgen kl. 13.00" */}
           <SlotTime>
             {price.isTomorrow && "I morgen "}kl. {formatTime(price.time_start)}
           </SlotTime>
+          <PriceCircle variant="small" price={price.DKK_per_kWh} />
         </PriceExtreme>
       ))}
     </PriceExtremesStyled>

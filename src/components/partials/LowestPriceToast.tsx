@@ -41,9 +41,16 @@ export const LowestPriceToast = () => {
   return (
     <Toast onClose={dismiss}>
       {/* formatTime shows when the cheapest hour starts, and also when it ends once it has begun */}
-      {nowTime < start
-        ? `Dagens billigste time starter om ${Math.ceil((start - nowTime) / 60000)}\u00a0min, kl. ${formatTime(cheapest.time_start)} (${price})`
-        : `Det er nu dagens billigste time, kl. ${formatTime(cheapest.time_start)} - ${formatTime(cheapest.time_end)} (${price})`}
+      {nowTime < start ? (
+        <>
+          {/* Hidden from screen readers, or the toast's live region would announce it every minute */}
+          Dagens billigste time starter{" "}
+          <span aria-hidden="true">om {Math.ceil((start - nowTime) / 60000)}{"\u00a0"}min, </span>
+          kl. {formatTime(cheapest.time_start)} ({price})
+        </>
+      ) : (
+        `Det er nu dagens billigste time, kl. ${formatTime(cheapest.time_start)} - ${formatTime(cheapest.time_end)} (${price})`
+      )}
     </Toast>
   );
 };

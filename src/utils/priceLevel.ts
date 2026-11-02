@@ -9,6 +9,12 @@ const getPriceLevels = (prices: ElectricityPrice[]) =>
     return Math.floor((cheaperCount / prices.length) * LEVEL_COUNT);
   });
 
+const LEVEL_NAMES = ["billig", "middel", "dyr"];
+
+// The color level in words, so the meaning of the color isn't only visual
+export const getPriceLevelName = (level: number) =>
+  LEVEL_NAMES[Math.floor((level / LEVEL_COUNT) * LEVEL_NAMES.length)];
+
 // Adds each price's color level, ranked against the other prices in the list
 export const withPriceLevels = (prices: ElectricityPrice[]) => {
   const levels = getPriceLevels(prices);

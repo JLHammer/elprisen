@@ -1,9 +1,19 @@
 import styled from "styled-components";
 import type { ElectricityPrice } from "../../types/api";
 import { formatKroner, formatTime } from "../../utils/format";
+import { getPriceLevelName } from "../../utils/priceLevel";
 import { card } from "../../styles/card";
+import { VisuallyHidden } from "./VisuallyHidden";
 
-const PriceHourEntryStyled = styled.div<{ $current: boolean }>`
+// role="list" because Safari drops the list semantics of lists styled with list-style: none
+export const PriceHourList = styled.ol.attrs({ role: "list" })`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const PriceHourEntryStyled = styled.li<{ $current: boolean }>`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -35,6 +45,9 @@ export const PriceHourEntry = ({
   <PriceHourEntryStyled $current={current} aria-current={current ? "time" : undefined}>
     {/* Start time and price of the hour, e.g. "kl. 13.00" and "0.123 kr" */}
     <HourEntry>kl. {formatTime(time_start)}</HourEntry>
-    <PriceEntry $level={level}>{formatKroner(DKK_per_kWh)}</PriceEntry>
+    <PriceEntry $level={level}>
+      {formatKroner(DKK_per_kWh)}
+      <VisuallyHidden>, {getPriceLevelName(level)}</VisuallyHidden>
+    </PriceEntry>
   </PriceHourEntryStyled>
 );

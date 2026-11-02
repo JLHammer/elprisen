@@ -1,9 +1,9 @@
-import { Fragment, useId, useState } from "react";
+import { useId, useState } from "react";
 import styled from "styled-components";
 import { useUpcomingPrices } from "../../hooks/useUpcomingPrices";
 import { useIsDesktop } from "../../hooks/useBreakpoints";
 import { ExpandToggle } from "../ui/ExpandToggle";
-import { PriceHourEntry } from "../ui/PriceHourEntry";
+import { PriceHourEntry, PriceHourList } from "../ui/PriceHourEntry";
 import { renderPriceStatus } from "../ui/priceStatus";
 
 // Hours shown before "Se fremtidige" opens the rest
@@ -17,11 +17,7 @@ const OverviewStyled = styled.div`
   gap: 0.5rem;
 `;
 
-const EarlierList = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+const EarlierList = styled(PriceHourList)`
   opacity: 0.5;
 
   &[hidden] {
@@ -29,7 +25,16 @@ const EarlierList = styled.div`
   }
 `;
 
-const DayDivider = styled.p`
+// The upcoming hours, which "Se fremtidige" shows more of
+const LaterPrices = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const DayDivider = styled.h2`
   margin-top: 1rem;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -51,9 +56,20 @@ export const OverviewSection = () => {
 
     const visiblePrices =
       isDesktop || showLater ? prices : prices.slice(0, VISIBLE_HOURS);
+    const todayPrices = visiblePrices.filter((price) => !price.isTomorrow);
+    const tomorrowPrices = visiblePrices.filter((price) => price.isTomorrow);
+
+    const renderEntries = (dayPrices: typeof visiblePrices) =>
+      dayPrices.map((price) => (
+        <PriceHourEntry
+          key={price.time_start}
+          price={price}
+          current={price === visiblePrices[0]}
+        />
+      ));
 
     return (
-      <OverviewStyled id={laterId}>
+      <OverviewStyled>
         {earlierPrices.length > 0 && (
           <>
             {!isDesktop && (
@@ -73,14 +89,17 @@ export const OverviewSection = () => {
             </EarlierList>
           </>
         )}
-        {visiblePrices.map((price, index) => (
-          <Fragment key={price.time_start}>
-            {price.isTomorrow && !visiblePrices[index - 1]?.isTomorrow && (
+        <LaterPrices id={laterId}>
+          {todayPrices.length > 0 && (
+            <PriceHourList>{renderEntries(todayPrices)}</PriceHourList>
+          )}
+          {tomorrowPrices.length > 0 && (
+            <>
               <DayDivider>I morgen</DayDivider>
-            )}
-            <PriceHourEntry price={price} current={index === 0} />
-          </Fragment>
-        ))}
+              <PriceHourList>{renderEntries(tomorrowPrices)}</PriceHourList>
+            </>
+          )}
+        </LaterPrices>
         {!isDesktop && prices.length > VISIBLE_HOURS && (
           <ExpandToggle
             expanded={showLater}

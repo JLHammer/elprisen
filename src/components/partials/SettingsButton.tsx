@@ -23,6 +23,7 @@ export const SettingsButton = () => {
       <IconButton
         type="button"
         aria-label="Indstillinger"
+        aria-haspopup={isTabletUp ? "dialog" : undefined}
         onClick={handleClick}
       >
         <Icon icon={faCog} size="1.5rem" />

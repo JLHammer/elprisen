@@ -8,8 +8,12 @@ type ToastProps = {
   onClose: () => void;
 };
 
-// Fixed at the bottom so several toasts stack upwards instead of overlapping
-export const ToastStack = styled.div`
+/*
+  Fixed at the bottom so several toasts stack upwards instead of overlapping.
+  It is the live region rather than each toast, because screen readers only reliably
+  announce content added to a region that was already on the page
+*/
+export const ToastStack = styled.div.attrs({ role: "status" })`
   position: fixed;
   bottom: 1rem;
   left: 50%;
@@ -38,7 +42,7 @@ const CloseButton = styled(TextButton)`
 `;
 
 export const Toast = ({ children, onClose }: ToastProps) => (
-  <ToastStyled role="status">
+  <ToastStyled>
     <p>{children}</p>
     <CloseButton type="button" onClick={onClose}>
       Luk

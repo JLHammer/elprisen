@@ -71,8 +71,8 @@ export const Dropdown = <T extends string>({
 
   const selectedIndex = options.findIndex((option) => option.value === value);
 
-  const openList = () => {
-    setActiveIndex(Math.max(selectedIndex, 0));
+  const openList = (index = Math.max(selectedIndex, 0)) => {
+    setActiveIndex(index);
     setOpen(true);
   };
 
@@ -82,6 +82,12 @@ export const Dropdown = <T extends string>({
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Home" || e.key === "End") {
+      e.preventDefault();
+      openList(e.key === "Home" ? 0 : options.length - 1);
+      return;
+    }
+
     if (!open) {
       if (["ArrowDown", "ArrowUp", "Enter", " "].includes(e.key)) {
         e.preventDefault();
@@ -117,7 +123,6 @@ export const Dropdown = <T extends string>({
         id={id}
         type="button"
         role="combobox"
-        aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
         aria-activedescendant={open ? `${listId}-${activeIndex}` : undefined}
@@ -125,7 +130,8 @@ export const Dropdown = <T extends string>({
         onClick={() => (open ? setOpen(false) : openList())}
         onKeyDown={handleKeyDown}
       >
-        {placeholder}
+        {/* The selected option is the combobox's value, which screen readers read with its label */}
+        {options[selectedIndex]?.label ?? placeholder}
         <Chevron>
           <ExpandIcon expanded={open} opens="down" />
         </Chevron>
