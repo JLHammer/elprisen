@@ -1,4 +1,5 @@
-import { useId, type ReactNode } from "react";
+import { useEffect, useId, useRef, type ReactNode } from "react";
+import { useLocation } from "react-router";
 import styled from "styled-components";
 
 import { useIsTabletUp } from "../../hooks/useBreakpoints";
@@ -50,6 +51,11 @@ const Heading = styled.h2`
   font-size: 1.75rem;
   text-align: center;
   text-transform: uppercase;
+
+  /* Only focused by the code below, which a focus ring would wrongly suggest is clickable */
+  &:focus-visible {
+    outline: none;
+  }
 `;
 
 const SettingsCorner = styled.div`
@@ -66,8 +72,21 @@ export const MainContentWrapper = ({
   children,
 }: MainContentWrapperProps) => {
   const headingId = useId();
+  const headingRef = useRef<HTMLHeadingElement>(null);
   // Tablet and up have the settings button in the header instead
   const isTabletUp = useIsTabletUp();
+  // "default" is the page the app opened on, which should keep the browser's own focus
+  const { key } = useLocation();
+  const openedByNavigation = useRef(key !== "default");
+
+  /*
+    Moves focus to the heading after navigating to a page, so screen readers announce
+    the new page instead of staying silent on the nav link.
+    Only on mount, as the history page changes the URL when its date changes
+  */
+  useEffect(() => {
+    if (title && openedByNavigation.current) headingRef.current?.focus();
+  }, [title]);
 
   return (
     <>
@@ -80,7 +99,9 @@ export const MainContentWrapper = ({
           </SettingsCorner>
         )}
         <HeadingRow $spacing={headingSpacing}>
-          <Heading id={headingId}>{heading}</Heading>
+          <Heading id={headingId} ref={headingRef} tabIndex={-1}>
+            {heading}
+          </Heading>
           {headingExtra && <HeadingExtra>{headingExtra}</HeadingExtra>}
         </HeadingRow>
         {children}
