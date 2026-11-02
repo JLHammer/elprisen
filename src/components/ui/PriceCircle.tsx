@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import type { Theme } from "../../styles/theme";
-import { formatKroner } from "../../utils/format";
+import { Kroner } from "./Kroner";
 
 type PriceCircleVariant = "large" | "small";
 
@@ -147,7 +147,9 @@ export const PriceCircle = ({ variant, price }: PriceCircleProps) => {
       ))}
       <Price $highlight={highlight}>
         {/* The price per kWh, e.g. "0.123 kr" */}
-        <Amount $size={amountSize}>{formatKroner(price)}</Amount>
+        <Amount $size={amountSize}>
+          <Kroner price={price} />
+        </Amount>
         <Unit $size={unitSize}>pr. kWh</Unit>
       </Price>
     </PriceCircleStyled>

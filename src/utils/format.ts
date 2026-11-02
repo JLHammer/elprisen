@@ -4,6 +4,13 @@ const priceFormatter = new Intl.NumberFormat("en-US", {
   useGrouping: false,
 });
 
+// Danish uses "," as decimal separator, so screen readers read "." as a thousands separator
+const spokenPriceFormatter = new Intl.NumberFormat("da-DK", {
+  minimumFractionDigits: 3,
+  maximumFractionDigits: 3,
+  useGrouping: false,
+});
+
 /*
   da-DK is what yields the "." time separator used in Denmark, giving "HH.MM",
   and the API's prices are hourly, so MM is always "00"
@@ -18,6 +25,10 @@ const formatPrice = (price: number) => priceFormatter.format(price);
 
 // Converts a price to kroner text, e.g. "0.123 kr"
 export const formatKroner = (price: number) => `${formatPrice(price)} kr`;
+
+// Converts a price to kroner text for screen readers, e.g. "0,123 kr"
+export const formatSpokenKroner = (price: number) =>
+  `${spokenPriceFormatter.format(price)} kr`;
 
 // Converts from ISO date string to "HH.MM" format
 export const formatTime = (isoDate: string) =>

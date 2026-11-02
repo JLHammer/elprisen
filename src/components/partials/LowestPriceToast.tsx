@@ -3,10 +3,11 @@ import { useState } from "react";
 import { useElectricityPrices } from "../../hooks/useElectricityPrices";
 import { useNow } from "../../hooks/useNow";
 import { useSettings } from "../../hooks/useSettings";
-import { formatKroner, formatTime } from "../../utils/format";
+import { formatTime } from "../../utils/format";
 import { getLowestPrice } from "../../utils/priceRange";
 import { getPriceSlot, hasPriceEnded } from "../../utils/priceSlot";
 import { readStorage, writeStorage } from "../../utils/storage";
+import { Kroner } from "../ui/Kroner";
 import { Toast } from "../ui/Toast";
 
 // Remembers the closed hour so the toast stays closed across reloads
@@ -40,8 +41,12 @@ export const LowestPriceToast = () => {
     writeStorage(STORAGE_KEY, cheapest.time_start);
   };
 
-  // The cheapest price as text for the toast, e.g. "0.123 kr pr. kWh"
-  const price = `${formatKroner(cheapest.DKK_per_kWh)} pr. kWh`;
+  // The cheapest price for the toast, e.g. "0.123 kr pr. kWh"
+  const price = (
+    <>
+      <Kroner price={cheapest.DKK_per_kWh} /> pr. kWh
+    </>
+  );
 
   return (
     <Toast onClose={dismiss}>
@@ -57,7 +62,10 @@ export const LowestPriceToast = () => {
           kl. {formatTime(cheapest.time_start)} ({price})
         </>
       ) : (
-        `Det er nu dagens billigste time, kl. ${formatTime(cheapest.time_start)} - ${formatTime(cheapest.time_end)} (${price})`
+        <>
+          Det er nu dagens billigste time, kl. {formatTime(cheapest.time_start)}{" "}
+          - {formatTime(cheapest.time_end)} ({price})
+        </>
       )}
     </Toast>
   );
