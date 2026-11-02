@@ -29,10 +29,18 @@ const NO_PRICES = "Der findes ingen priser for denne dag";
 
 const MINUTES_PER_DAY = 24 * 60;
 
-const msUntilDanishMinute = (now: Date, minuteOfDay: number) =>
-  (minuteOfDay - getDanishTime(now).minutes) * 60 * 1000 -
-  now.getSeconds() * 1000 -
-  now.getMilliseconds();
+const msUntilDanishMinute = (now: Date, minuteOfDay: number) => {
+  const ms =
+    (minuteOfDay - getDanishTime(now).minutes) * 60 * 1000 -
+    now.getSeconds() * 1000 -
+    now.getMilliseconds();
+  // A clock change in between moves the target, so correct by how far off the Danish clock is then
+  const reached = getDanishTime(new Date(now.getTime() + ms)).minutes;
+  const drift =
+    ((reached - minuteOfDay + MINUTES_PER_DAY * 1.5) % MINUTES_PER_DAY) -
+    MINUTES_PER_DAY / 2;
+  return ms - drift * 60 * 1000;
+};
 
 export const formatDatePath = (date: Date, dayOffset = 0) =>
   toDatePath(getDanishDate(dayOffset, date));
