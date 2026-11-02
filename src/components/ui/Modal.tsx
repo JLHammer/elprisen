@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, type ReactNode } from "react";
 import styled from "styled-components";
 import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import { Icon } from "./Icon";
+import { IconButton } from "./IconButton";
 
 type ModalProps = {
   open: boolean;
@@ -40,18 +41,11 @@ const Content = styled.div`
   padding: 4rem 2rem;
 `;
 
-const CloseButton = styled.button`
+const CloseButton = styled(IconButton)`
   position: absolute;
   top: 1.25rem;
   right: 1.25rem;
-  display: flex;
   border-radius: 50%;
-  color: ${({ theme }) => theme.colors.primary};
-  transition: ${({ theme }) => theme.transitions.hover("color")};
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.text};
-  }
 `;
 
 const Heading = styled.h2`

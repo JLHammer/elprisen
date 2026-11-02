@@ -2,6 +2,7 @@ import { useId, type ReactNode } from "react";
 import styled from "styled-components";
 import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
 import { Icon } from "./Icon";
+import { IconButton } from "./IconButton";
 import { card } from "../../styles/card";
 
 type TooltipAnchor = "trigger" | "container";
@@ -39,16 +40,8 @@ const TooltipStyled = styled.span<{ $anchor: TooltipAnchor }>`
   }
 `;
 
-const Trigger = styled.button`
-  display: flex;
-  color: ${({ theme }) => theme.colors.text};
+const Trigger = styled(IconButton)`
   cursor: help;
-  transition: ${({ theme }) => theme.transitions.hover("color")};
-
-  &:hover,
-  &:focus-visible {
-    color: ${({ theme }) => theme.colors.primary};
-  }
 `;
 
 export const Tooltip = ({ label, anchor = "trigger", children }: TooltipProps) => {
