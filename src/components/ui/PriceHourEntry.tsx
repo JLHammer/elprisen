@@ -18,7 +18,8 @@ const PriceHourEntryStyled = styled.li<{ $current: boolean }>`
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 6.4rem;
+  /* Shrinks on narrow screens and with enlarged text, so the price stays inside the card */
+  gap: min(6.5rem, 40%);
   align-items: center;
   ${card}
   /* The current hour glows brighter than the card's shadow */
