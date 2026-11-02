@@ -1,4 +1,5 @@
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+
 import { Icon } from "./Icon";
 
 export type ExpandDirection = "up" | "down";

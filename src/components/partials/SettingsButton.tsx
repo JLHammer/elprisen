@@ -1,12 +1,13 @@
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+
+import { useIsTabletUp } from "../../hooks/useBreakpoints";
+import { PAGE_LABELS, ROUTES } from "../../router/routes";
+import { SettingsSection } from "../sections/SettingsSection";
 import { Icon } from "../ui/Icon";
 import { IconButton } from "../ui/IconButton";
 import { Modal } from "../ui/Modal";
-import { SettingsSection } from "../sections/SettingsSection";
-import { useIsTabletUp } from "../../hooks/useBreakpoints";
-import { PAGE_LABELS, ROUTES } from "../../router/routes";
 
 export const SettingsButton = () => {
   const navigate = useNavigate();

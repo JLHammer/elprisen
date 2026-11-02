@@ -1,8 +1,8 @@
 import { MainContentWrapper } from "../components/layout/MainContentWrapper";
-import { PAGE_LABELS } from "../router/routes";
-import { SECTION_HEADINGS } from "../components/sections/sectionHeadings";
 import { OverviewSection } from "../components/sections/OverviewSection";
 import { PriceExtremesSection } from "../components/sections/PriceExtremesSection";
+import { SECTION_HEADINGS } from "../components/sections/sectionHeadings";
+import { PAGE_LABELS } from "../router/routes";
 
 const { overview } = PAGE_LABELS;
 

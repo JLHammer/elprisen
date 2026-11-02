@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { useUpcomingPrices } from "../../hooks/useUpcomingPrices";
 import { formatTime } from "../../utils/format";
 import { getHighestPrice, getLowestPrice } from "../../utils/priceRange";

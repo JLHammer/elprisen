@@ -23,7 +23,11 @@ export const boxShadows = {
 } as const;
 
 export const borderGradients = {
-  inner: (strength: number, background: string = colors.backgroundDark, width = "0.5rem") =>
+  inner: (
+    strength: number,
+    background: string = colors.backgroundDark,
+    width = "0.5rem",
+  ) =>
     `radial-gradient(
       closest-side,
       ${background} calc(100% - ${width}),
@@ -39,7 +43,8 @@ export const focusRing = {
 
 // Fades the given properties on hover, e.g. hover("color", "box-shadow")
 export const transitions = {
-  hover: (...properties: string[]) => properties.map((property) => `${property} 0.15s`).join(", "),
+  hover: (...properties: string[]) =>
+    properties.map((property) => `${property} 0.15s`).join(", "),
 } as const;
 
 export const fonts = {

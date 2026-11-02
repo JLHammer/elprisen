@@ -1,9 +1,10 @@
+import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import styled from "styled-components";
-import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
+
+import { card } from "../../styles/card";
 import { Icon } from "./Icon";
 import { IconButton } from "./IconButton";
-import { card } from "../../styles/card";
 
 type TooltipAnchor = "trigger" | "container";
 
@@ -43,7 +44,11 @@ const Trigger = styled(IconButton)`
   A toggletip: the button opens it, and a mouse hovering it shows it too.
   Escape, clicking outside and tabbing away close it
 */
-export const Tooltip = ({ label, anchor = "trigger", children }: TooltipProps) => {
+export const Tooltip = ({
+  label,
+  anchor = "trigger",
+  children,
+}: TooltipProps) => {
   const bubbleId = useId();
   const tooltipRef = useRef<HTMLSpanElement>(null);
   const [pinned, setPinned] = useState(false);

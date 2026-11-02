@@ -1,4 +1,5 @@
 import { defineConfig } from "@vite-pwa/assets-generator/config";
+
 import { colors } from "./src/styles/theme";
 
 const background = colors.backgroundDark;
@@ -22,7 +23,8 @@ export default defineConfig({
     },
     assetName: (type, { width }) => {
       if (type === "apple") return "icons/ios/180.png";
-      if (type === "maskable") return `icons/android/maskable-icon-${width}-${width}.png`;
+      if (type === "maskable")
+        return `icons/android/maskable-icon-${width}-${width}.png`;
       return `icons/android/android-launchericon-${width}-${width}.png`;
     },
   },

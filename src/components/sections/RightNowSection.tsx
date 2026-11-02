@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { useElectricityPrices } from "../../hooks/useElectricityPrices";
 import { useNow } from "../../hooks/useNow";
 import { formatTime } from "../../utils/format";

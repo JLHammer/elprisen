@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSettings } from "./useSettings";
-import { addVat } from "../utils/vat";
-import { getDanishDate, getDanishTime } from "../utils/danishTime";
+
 import type { ElectricityPrice, ElectricityPricesResponse } from "../types/api";
+import { getDanishDate, getDanishTime } from "../utils/danishTime";
+import { addVat } from "../utils/vat";
+import { useSettings } from "./useSettings";
 
 const API_URL = "https://www.elprisenligenu.dk/api/v1/prices";
 
@@ -25,13 +26,19 @@ const NO_PRICES = "Der findes ingen priser for denne dag";
 const MINUTES_PER_DAY = 24 * 60;
 
 const msUntilDanishMinute = (now: Date, minuteOfDay: number) =>
-  (minuteOfDay - getDanishTime(now).minutes) * 60 * 1000 - now.getSeconds() * 1000 - now.getMilliseconds();
+  (minuteOfDay - getDanishTime(now).minutes) * 60 * 1000 -
+  now.getSeconds() * 1000 -
+  now.getMilliseconds();
 
-const formatDatePath = (date: Date, dayOffset = 0) => toDatePath(getDanishDate(dayOffset, date));
+const formatDatePath = (date: Date, dayOffset = 0) =>
+  toDatePath(getDanishDate(dayOffset, date));
 
 const getUnavailableMessage = (datePath: string) => {
   const now = new Date();
-  const latestDatePath = formatDatePath(now, getDanishTime(now).minutes < FIRST_FETCH_MINUTES ? 0 : 1);
+  const latestDatePath = formatDatePath(
+    now,
+    getDanishTime(now).minutes < FIRST_FETCH_MINUTES ? 0 : 1,
+  );
 
   if (datePath > latestDatePath) return NOT_PUBLISHED_YET;
   if (datePath < FIRST_DATE_PATH) return NO_PRICES;
@@ -57,7 +64,9 @@ const getNextAttemptAt = (datePath: string, area: string) => {
 };
 
 const requestPrices = async (datePath: string, area: string) => {
-  const res = await fetch(`${API_URL}/${datePath}_${area}.json`, { cache: "no-cache" });
+  const res = await fetch(`${API_URL}/${datePath}_${area}.json`, {
+    cache: "no-cache",
+  });
 
   if (res.status === 404) {
     const isFuture = datePath > formatDatePath(new Date());
@@ -66,7 +75,8 @@ const requestPrices = async (datePath: string, area: string) => {
   if (!res.ok) throw new Error(`Kunne ikke hente elpriser (${res.status})`);
 
   const data: unknown = await res.json().catch(() => null);
-  if (!Array.isArray(data) || data.length === 0) throw new Error("Elpriserne kunne ikke læses");
+  if (!Array.isArray(data) || data.length === 0)
+    throw new Error("Elpriserne kunne ikke læses");
   return data as ElectricityPricesResponse;
 };
 
@@ -88,10 +98,13 @@ const loadPrices = (datePath: string, area: string) => {
       } else {
         const now = new Date();
         const { minutes } = getDanishTime(now);
-        const isLate = datePath > formatDatePath(now) && minutes >= LATE_MINUTES;
+        const isLate =
+          datePath > formatDatePath(now) && minutes >= LATE_MINUTES;
 
         const untilMidnight = msUntilDanishMinute(now, MINUTES_PER_DAY);
-        entry.retryAt = now.getTime() + Math.min(isLate ? LATE_RETRY_AFTER : RETRY_AFTER, untilMidnight);
+        entry.retryAt =
+          now.getTime() +
+          Math.min(isLate ? LATE_RETRY_AFTER : RETRY_AFTER, untilMidnight);
       }
       throw err;
     }),
@@ -100,8 +113,13 @@ const loadPrices = (datePath: string, area: string) => {
   return entry.request;
 };
 
-export const useElectricityPrices = (date: Date = new Date(), dayOffset = 0) => {
-  const { settings: { area, includeVat } } = useSettings();
+export const useElectricityPrices = (
+  date: Date = new Date(),
+  dayOffset = 0,
+) => {
+  const {
+    settings: { area, includeVat },
+  } = useSettings();
   const [rawPrices, setRawPrices] = useState<ElectricityPrice[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -117,7 +135,10 @@ export const useElectricityPrices = (date: Date = new Date(), dayOffset = 0) => 
       clearTimeout(retryTimer);
       const nextAttemptAt = getNextAttemptAt(datePath, area);
       if (nextAttemptAt !== null) {
-        retryTimer = setTimeout(() => fetchPrices(true), Math.max(nextAttemptAt - Date.now(), 0) + 1000);
+        retryTimer = setTimeout(
+          () => fetchPrices(true),
+          Math.max(nextAttemptAt - Date.now(), 0) + 1000,
+        );
       }
     };
 

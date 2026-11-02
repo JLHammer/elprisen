@@ -1,5 +1,6 @@
 import { useId, useState, type KeyboardEvent } from "react";
 import styled from "styled-components";
+
 import { ExpandIcon } from "./ExpandIcon";
 
 type DropdownOption<T extends string> = {
@@ -52,7 +53,9 @@ const Option = styled.li<{ $selected: boolean; $active: boolean }>`
   text-align: center;
   color: ${({ theme, $selected }) => ($selected ? theme.colors.primary : theme.colors.text)};
   background-color: ${({ theme, $active }) =>
-    $active ? `color-mix(in srgb, ${theme.colors.text} 10%, transparent)` : "transparent"};
+    $active
+      ? `color-mix(in srgb, ${theme.colors.text} 10%, transparent)`
+      : "transparent"};
   cursor: pointer;
 `;
 

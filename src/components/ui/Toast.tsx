@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import styled from "styled-components";
-import { TextButton } from "./TextButton";
+
 import { card } from "../../styles/card";
+import { TextButton } from "./TextButton";
 
 type ToastProps = {
   children: ReactNode;

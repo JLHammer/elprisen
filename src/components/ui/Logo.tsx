@@ -1,5 +1,6 @@
-import styled from "styled-components";
 import { NavLink } from "react-router";
+import styled from "styled-components";
+
 import { HOME } from "../../router/routes";
 
 const SITE_TITLE = "ElPrisen.nu";

@@ -1,4 +1,5 @@
 import { useRegisterSW } from "virtual:pwa-register/react";
+
 import { Toast } from "../ui/Toast";
 
 const UPDATE_PERIOD = 60 * 60 * 1000;
@@ -12,7 +13,8 @@ export const OfflineReadyToast = () => {
       if (!r) return;
 
       setInterval(async () => {
-        if (r.installing || ("onLine" in navigator && !navigator.onLine)) return;
+        if (r.installing || ("onLine" in navigator && !navigator.onLine))
+          return;
 
         try {
           const resp = await fetch(swUrl, { cache: "no-store" });
@@ -27,5 +29,9 @@ export const OfflineReadyToast = () => {
 
   if (!offlineReady) return null;
 
-  return <Toast onClose={() => setOfflineReady(false)}>Appen er klar til at blive brugt offline</Toast>;
+  return (
+    <Toast onClose={() => setOfflineReady(false)}>
+      Appen er klar til at blive brugt offline
+    </Toast>
+  );
 };

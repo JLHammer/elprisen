@@ -1,5 +1,6 @@
 import { useId } from "react";
 import styled from "styled-components";
+
 import { useSettings } from "../../hooks/useSettings";
 import type { PriceArea } from "../../types/api";
 import { PRICE_AREAS } from "../../utils/priceArea";

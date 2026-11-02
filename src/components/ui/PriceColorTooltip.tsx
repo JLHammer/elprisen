@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { priceColors } from "../../styles/theme";
 import { Tooltip } from "./Tooltip";
 
@@ -29,16 +30,17 @@ const ScaleLabels = styled.div`
 export const PriceColorTooltip = () => (
   <Tooltip label="Hvad betyder farverne?" anchor="container">
     <Text>
-      Farven viser, hvor billig prisen er i forhold til resten af samme døgn. Grøn er døgnets
-      billigste priser, orange og rød de dyreste.
+      Farven viser, hvor billig prisen er i forhold til resten af samme døgn.
+      Grøn er døgnets billigste priser, orange og rød de dyreste.
     </Text>
     <Text>
-      Døgnets priser deles ligeligt mellem farverne, så én høj pris ikke får resten til at se
-      billige ud. I morgen farves ud fra morgendagens egne priser.
+      Døgnets priser deles ligeligt mellem farverne, så én høj pris ikke får
+      resten til at se billige ud. I morgen farves ud fra morgendagens egne
+      priser.
     </Text>
     <Text>
-      Morgendagens priser kommer hver dag omkring kl. 13 og dukker op her af sig selv. Indtil da
-      slutter oversigten ved midnat.
+      Morgendagens priser kommer hver dag omkring kl. 13 og dukker op her af sig
+      selv. Indtil da slutter oversigten ved midnat.
     </Text>
     <Scale aria-hidden="true">
       {priceColors.map((color) => (

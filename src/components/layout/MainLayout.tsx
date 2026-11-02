@@ -1,11 +1,12 @@
-import styled from "styled-components";
 import { Outlet } from "react-router";
-import { Header } from "../partials/Header";
+import styled from "styled-components";
+
+import { useIsDesktop, useIsTabletUp } from "../../hooks/useBreakpoints";
 import { Footer } from "../partials/Footer";
+import { Header } from "../partials/Header";
 import { NavBar } from "../partials/NavBar";
 import { SettingsButton } from "../partials/SettingsButton";
 import { Logo } from "../ui/Logo";
-import { useIsDesktop, useIsTabletUp } from "../../hooks/useBreakpoints";
 
 // Fills the screen, so the footer sits at the bottom on pages with little content
 const MainLayoutStyled = styled.div`

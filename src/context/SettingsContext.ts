@@ -1,4 +1,5 @@
 import { createContext } from "react";
+
 import type { PriceArea } from "../types/api";
 
 export type Settings = {

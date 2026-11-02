@@ -1,8 +1,11 @@
+import { PAGE_LABELS } from "../../router/routes";
 import type { MainContentWrapperProps } from "../layout/MainContentWrapper";
 import { PriceColorTooltip } from "../ui/PriceColorTooltip";
-import { PAGE_LABELS } from "../../router/routes";
 
-type SectionHeading = Pick<MainContentWrapperProps, "heading" | "headingSpacing" | "headingExtra">;
+type SectionHeading = Pick<
+  MainContentWrapperProps,
+  "heading" | "headingSpacing" | "headingExtra"
+>;
 
 // Shared by each section's own page and the desktop dashboard, so the two stay alike
 export const SECTION_HEADINGS = {

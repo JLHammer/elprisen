@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { useElectricityPrices } from "../../hooks/useElectricityPrices";
 import { useNow } from "../../hooks/useNow";
 import { useSettings } from "../../hooks/useSettings";
@@ -27,7 +28,11 @@ export const LowestPriceToast = () => {
   const { start } = getPriceSlot(cheapest);
   const nowTime = now.getTime();
 
-  if (dismissed === cheapest.time_start || nowTime < start - LEAD_TIME || hasPriceEnded(cheapest, now))
+  if (
+    dismissed === cheapest.time_start ||
+    nowTime < start - LEAD_TIME ||
+    hasPriceEnded(cheapest, now)
+  )
     return null;
 
   const dismiss = () => {
@@ -45,7 +50,10 @@ export const LowestPriceToast = () => {
         <>
           {/* Hidden from screen readers, or the toast's live region would announce it every minute */}
           Dagens billigste time starter{" "}
-          <span aria-hidden="true">om {Math.ceil((start - nowTime) / 60000)}{"\u00a0"}min, </span>
+          <span aria-hidden="true">
+            om {Math.ceil((start - nowTime) / 60000)}
+            {"\u00a0"}min,{" "}
+          </span>
           kl. {formatTime(cheapest.time_start)} ({price})
         </>
       ) : (

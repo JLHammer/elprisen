@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router";
+
 import { getDanishDate } from "../utils/danishTime";
 
 const DATE_PARAM = "dato";

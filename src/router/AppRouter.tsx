@@ -1,15 +1,16 @@
-import { Routes, Route, Navigate, useLocation } from "react-router";
-import { HOME, ROUTES } from "./routes";
-import {
-  OverviewPage,
-  RightNowPage,
-  HistoryPage,
-  DashboardPage,
-  SettingsPage,
-  NotFoundPage,
-} from "../pages";
+import { Navigate, Route, Routes, useLocation } from "react-router";
+
 import { MainLayout } from "../components/layout/MainLayout";
 import { useIsDesktop, useIsTabletUp } from "../hooks/useBreakpoints";
+import {
+  DashboardPage,
+  HistoryPage,
+  NotFoundPage,
+  OverviewPage,
+  RightNowPage,
+  SettingsPage,
+} from "../pages";
+import { HOME, ROUTES } from "./routes";
 
 const { overview, rightNow, history, settings, notFound } = ROUTES;
 
@@ -25,7 +26,9 @@ export const AppRouter = () => {
 
   return (
     <Routes>
-      {!isDesktop && <Route index element={<Navigate to={rightNow} replace />} />}
+      {!isDesktop && (
+        <Route index element={<Navigate to={rightNow} replace />} />
+      )}
       <Route element={<MainLayout />}>
         {isDesktop ? (
           /*

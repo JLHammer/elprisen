@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { useSettings } from "../../hooks/useSettings";
 import { PRICE_AREAS } from "../../utils/priceArea";
 

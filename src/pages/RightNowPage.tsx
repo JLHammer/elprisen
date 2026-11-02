@@ -1,7 +1,7 @@
 import { MainContentWrapper } from "../components/layout/MainContentWrapper";
-import { PAGE_LABELS } from "../router/routes";
-import { SECTION_HEADINGS } from "../components/sections/sectionHeadings";
 import { RightNowSection } from "../components/sections/RightNowSection";
+import { SECTION_HEADINGS } from "../components/sections/sectionHeadings";
+import { PAGE_LABELS } from "../router/routes";
 
 const { rightNow } = PAGE_LABELS;
 

@@ -1,7 +1,8 @@
-import styled from "styled-components";
 import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
-import { formatDate } from "../../utils/format";
+import styled from "styled-components";
+
 import { card } from "../../styles/card";
+import { formatDate } from "../../utils/format";
 import { Icon } from "./Icon";
 
 type DatePickerProps = {
@@ -51,7 +52,14 @@ const DateInput = styled.input`
   cursor: pointer;
 `;
 
-export const DatePicker = ({ label, value, min, max, onChange, className }: DatePickerProps) => (
+export const DatePicker = ({
+  label,
+  value,
+  min,
+  max,
+  onChange,
+  className,
+}: DatePickerProps) => (
   <DatePickerStyled className={className}>
     {/* Shows the selected date as "DD-MM-YYYY" */}
     <DateText>{formatDate(value)}</DateText>

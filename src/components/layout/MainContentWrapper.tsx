@@ -1,7 +1,8 @@
 import { useId, type ReactNode } from "react";
 import styled from "styled-components";
-import { SettingsButton } from "../partials/SettingsButton";
+
 import { useIsTabletUp } from "../../hooks/useBreakpoints";
+import { SettingsButton } from "../partials/SettingsButton";
 
 const SITE_NAME = "Elprisen";
 

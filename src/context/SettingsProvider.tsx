@@ -1,6 +1,11 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { SettingsContext, defaultSettings, type Settings } from "./SettingsContext";
+
 import { readStorage, writeStorage } from "../utils/storage";
+import {
+  defaultSettings,
+  SettingsContext,
+  type Settings,
+} from "./SettingsContext";
 
 type SettingsProviderProps = {
   children: ReactNode;
@@ -31,5 +36,9 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
     setSettings((prev) => ({ ...prev, ...changes }));
   };
 
-  return <SettingsContext value={{ settings, updateSettings }}>{children}</SettingsContext>;
+  return (
+    <SettingsContext value={{ settings, updateSettings }}>
+      {children}
+    </SettingsContext>
+  );
 };

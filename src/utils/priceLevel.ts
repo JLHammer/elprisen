@@ -5,7 +5,9 @@ const LEVEL_COUNT = priceColors.length;
 
 const getPriceLevels = (prices: ElectricityPrice[]) =>
   prices.map(({ DKK_per_kWh }) => {
-    const cheaperCount = prices.filter((other) => other.DKK_per_kWh < DKK_per_kWh).length;
+    const cheaperCount = prices.filter(
+      (other) => other.DKK_per_kWh < DKK_per_kWh,
+    ).length;
     return Math.floor((cheaperCount / prices.length) * LEVEL_COUNT);
   });
 

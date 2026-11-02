@@ -1,6 +1,7 @@
+import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import styled from "styled-components";
-import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
+
 import { Icon } from "./Icon";
 import { IconButton } from "./IconButton";
 

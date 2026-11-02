@@ -10,10 +10,12 @@ React, TypeScript, Vite, styled-components, React Router and vite-plugin-pwa (Wo
 
 ## Scripts
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start the dev server |
-| `npm run build` | Type-check and build for production |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | Run ESLint |
+| Command                       | Description                                                     |
+| ----------------------------- | --------------------------------------------------------------- |
+| `npm run dev`                 | Start the dev server                                            |
+| `npm run build`               | Type-check and build for production                             |
+| `npm run preview`             | Preview the production build                                    |
+| `npm run lint`                | Run ESLint                                                      |
+| `npm run format`              | Format all files with Prettier                                  |
+| `npm run format:check`        | Check that all files are formatted                              |
 | `npm run generate-pwa-assets` | Regenerate the maskable and iOS icons from `public/favicon.svg` |

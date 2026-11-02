@@ -1,5 +1,6 @@
-import styled from "styled-components";
 import { NavLink } from "react-router";
+import styled from "styled-components";
+
 import { NAV_LINKS } from "../../router/routes";
 
 const NavBarStyled = styled.nav`

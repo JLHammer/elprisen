@@ -1,7 +1,8 @@
 import { useId, useState } from "react";
 import styled from "styled-components";
-import { useUpcomingPrices } from "../../hooks/useUpcomingPrices";
+
 import { useIsDesktop } from "../../hooks/useBreakpoints";
+import { useUpcomingPrices } from "../../hooks/useUpcomingPrices";
 import { ExpandToggle } from "../ui/ExpandToggle";
 import { PriceHourEntry, PriceHourList } from "../ui/PriceHourEntry";
 import { renderPriceStatus } from "../ui/priceStatus";

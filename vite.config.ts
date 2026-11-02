@@ -1,6 +1,7 @@
-import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+
 import { colors } from "./src/styles/theme";
 
 // Replaces %theme.<color>% in index.html with that color from the theme, e.g. %theme.background%
@@ -8,7 +9,8 @@ const themeColorsInHtml = (): Plugin => ({
   name: "theme-colors-in-html",
   transformIndexHtml: (html) =>
     html.replace(/%theme\.(\w+)%/g, (_, name: string) => {
-      if (!(name in colors)) throw new Error(`Unknown theme color in index.html: ${name}`);
+      if (!(name in colors))
+        throw new Error(`Unknown theme color in index.html: ${name}`);
       return colors[name as keyof typeof colors];
     }),
 });

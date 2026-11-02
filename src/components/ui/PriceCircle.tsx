@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { formatKroner } from "../../utils/format";
+
 import type { Theme } from "../../styles/theme";
+import { formatKroner } from "../../utils/format";
 
 type PriceCircleVariant = "large" | "small";
 
@@ -85,7 +86,8 @@ const DashedRing = styled.span<DashedRingProps>`
   inset: ${({ $inset }) => $inset};
   border-radius: 50%;
   background: repeating-conic-gradient(
-    ${({ theme }) => theme.colors.primary} 0 calc(180deg / ${({ $dashes }) => $dashes}),
+    ${({ theme }) => theme.colors.primary} 0
+      calc(180deg / ${({ $dashes }) => $dashes}),
     transparent 0 calc(360deg / ${({ $dashes }) => $dashes})
   );
   mask: radial-gradient(
@@ -117,13 +119,31 @@ const Unit = styled.span<{ $size: string }>`
 `;
 
 export const PriceCircle = ({ variant, price }: PriceCircleProps) => {
-  const { width, background, glow, shadow, rings, amountSize, unitSize, highlight } =
-    VARIANTS[variant];
+  const {
+    width,
+    background,
+    glow,
+    shadow,
+    rings,
+    amountSize,
+    unitSize,
+    highlight,
+  } = VARIANTS[variant];
 
   return (
-    <PriceCircleStyled $width={width} $background={background} $glow={glow} $shadow={shadow}>
+    <PriceCircleStyled
+      $width={width}
+      $background={background}
+      $glow={glow}
+      $shadow={shadow}
+    >
       {rings.map(({ inset, dashes, opacity = 1 }) => (
-        <DashedRing key={inset} $inset={inset} $dashes={dashes} $opacity={opacity} />
+        <DashedRing
+          key={inset}
+          $inset={inset}
+          $dashes={dashes}
+          $opacity={opacity}
+        />
       ))}
       <Price $highlight={highlight}>
         {/* The price per kWh, e.g. "0.123 kr" */}
