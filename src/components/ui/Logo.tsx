@@ -13,7 +13,6 @@ const LogoLinkStyled = styled(NavLink)`
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  text-decoration: none;
 `;
 
 // Mobile has no room for it next to the navbar

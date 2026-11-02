@@ -16,7 +16,6 @@ const ModalStyled = styled.dialog`
   width: min(45rem, calc(100% - 2rem));
   margin: auto;
   padding: 0;
-  border: none;
   border-radius: 0.25rem;
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};

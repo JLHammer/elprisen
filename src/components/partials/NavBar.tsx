@@ -9,8 +9,6 @@ const NavBarStyled = styled.nav`
 `;
 
 const MenuLink = styled(NavLink)`
-  text-decoration: none;
-  color: ${({ theme }) => theme.colors.text};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   text-transform: uppercase;
   padding: 0.5rem;

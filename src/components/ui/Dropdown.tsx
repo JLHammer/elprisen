@@ -28,7 +28,6 @@ const Trigger = styled.button<{ $open: boolean }>`
   padding: 0.4rem 0.6rem;
   border-radius: ${({ $open }) => ($open ? "0.25rem 0.25rem 0 0" : "0.25rem")};
   background-color: ${({ theme }) => theme.colors.backgroundDark};
-  color: ${({ theme }) => theme.colors.text};
   text-transform: inherit;
 `;
 
@@ -46,7 +45,6 @@ const OptionList = styled.ul`
   padding-bottom: 0.25rem;
   border-radius: 0 0 0.25rem 0.25rem;
   background-color: ${({ theme }) => theme.colors.backgroundDark};
-  list-style: none;
 `;
 
 const Option = styled.li<{ $selected: boolean; $active: boolean }>`

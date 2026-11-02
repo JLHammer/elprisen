@@ -43,7 +43,7 @@ export const transitions = {
 } as const;
 
 export const fonts = {
-  roboto: '"Roboto", sans-serif',
+  roboto: '"Roboto", system-ui, sans-serif',
 } as const;
 
 export const fontWeights = {

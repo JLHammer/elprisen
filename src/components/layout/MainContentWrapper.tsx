@@ -48,7 +48,6 @@ const Heading = styled.h1`
   grid-column: 2;
   text-align: center;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.text};
 `;
 
 const SettingsCorner = styled.div`
