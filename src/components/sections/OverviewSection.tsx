@@ -19,8 +19,17 @@ const OverviewStyled = styled.div`
   gap: 0.5rem;
 `;
 
+// Past hours are unlit cards dimmed towards the page, with faded times. Not opacity: 0.5, which made the prices too faint to read
 const EarlierList = styled(PriceHourList)`
-  opacity: 0.5;
+  li {
+    box-shadow: none;
+    background-color: ${({ theme }) =>
+      `color-mix(in srgb, ${theme.colors.background} 25%, ${theme.colors.backgroundDark})`};
+  }
+
+  li > p:first-child {
+    color: ${({ theme }) => `color-mix(in srgb, ${theme.colors.text} 55%, transparent)`};
+  }
 
   &[hidden] {
     display: none;
