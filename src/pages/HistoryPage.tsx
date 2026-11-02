@@ -5,10 +5,8 @@ import { PAGE_LABELS } from "../router/routes";
 
 const { history } = PAGE_LABELS;
 
-export const HistoryPage = () => {
-  return (
-    <MainContentWrapper title={history} {...SECTION_HEADINGS.history}>
-      <HistorySection />
-    </MainContentWrapper>
-  );
-};
+export const HistoryPage = () => (
+  <MainContentWrapper title={history} {...SECTION_HEADINGS.history}>
+    <HistorySection />
+  </MainContentWrapper>
+);

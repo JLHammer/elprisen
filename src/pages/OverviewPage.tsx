@@ -6,11 +6,9 @@ import { PAGE_LABELS } from "../router/routes";
 
 const { overview } = PAGE_LABELS;
 
-export const OverviewPage = () => {
-  return (
-    <MainContentWrapper title={overview} {...SECTION_HEADINGS.overview}>
-      <PriceExtremesSection />
-      <OverviewSection />
-    </MainContentWrapper>
-  );
-};
+export const OverviewPage = () => (
+  <MainContentWrapper title={overview} {...SECTION_HEADINGS.overview}>
+    <PriceExtremesSection />
+    <OverviewSection />
+  </MainContentWrapper>
+);

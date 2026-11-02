@@ -17,6 +17,6 @@ const HeaderStyled = styled.header`
   }
 `;
 
-export const Header = ({ children }: HeaderProps) => {
-  return <HeaderStyled>{children}</HeaderStyled>;
-};
+export const Header = ({ children }: HeaderProps) => (
+  <HeaderStyled>{children}</HeaderStyled>
+);

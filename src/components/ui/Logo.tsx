@@ -32,16 +32,14 @@ const LogoImage = styled.img<{ $size?: string }>`
   width: ${({ $size }) => $size ?? "clamp(3.5rem, 10vw, 7.5rem)"};
 `;
 
-export const Logo = ({ size }: LogoProps) => {
-  return (
-    // The label starts with the visible title, so voice control users can say what they see
-    <LogoLinkStyled to={HOME} aria-label={`${SITE_TITLE}, forside`}>
-      {/*
+export const Logo = ({ size }: LogoProps) => (
+  // The label starts with the visible title, so voice control users can say what they see
+  <LogoLinkStyled to={HOME} aria-label={`${SITE_TITLE}, forside`}>
+    {/*
         Same file as the favicon, the PWA icons are generated from it.
         Empty alt, since the link's aria-label already names it
       */}
-      <LogoImage src="/favicon.svg" alt="" $size={size} />
-      <SiteName>{SITE_TITLE}</SiteName>
-    </LogoLinkStyled>
-  );
-};
+    <LogoImage src="/favicon.svg" alt="" $size={size} />
+    <SiteName>{SITE_TITLE}</SiteName>
+  </LogoLinkStyled>
+);

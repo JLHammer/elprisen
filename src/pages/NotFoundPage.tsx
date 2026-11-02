@@ -3,6 +3,6 @@ import { PAGE_LABELS } from "../router/routes";
 
 const { notFound } = PAGE_LABELS;
 
-export const NotFoundPage = () => {
-  return <MainContentWrapper title={notFound} heading={notFound} />;
-};
+export const NotFoundPage = () => (
+  <MainContentWrapper title={notFound} heading={notFound} />
+);

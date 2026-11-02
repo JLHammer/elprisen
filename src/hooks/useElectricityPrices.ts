@@ -180,10 +180,10 @@ export const useElectricityPrices = (
     };
 
     const handleOnline = () => {
-      if (!loaded) fetchPrices(true);
+      if (!loaded) void fetchPrices(true);
     };
 
-    fetchPrices();
+    void fetchPrices();
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("online", handleOnline);
 

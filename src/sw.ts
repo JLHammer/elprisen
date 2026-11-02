@@ -23,7 +23,7 @@ const validPricesPlugin: WorkboxPlugin = {
   },
 };
 
-self.skipWaiting();
+void self.skipWaiting();
 clientsClaim();
 
 precacheAndRoute(self.__WB_MANIFEST);

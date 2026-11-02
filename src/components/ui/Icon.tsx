@@ -11,6 +11,6 @@ const IconStyled = styled(FontAwesomeIcon)<{ $size?: string }>`
   font-size: ${({ $size }) => $size ?? "1em"};
 `;
 
-export const Icon = ({ icon, size }: IconProps) => {
-  return <IconStyled icon={icon} $size={size} />;
-};
+export const Icon = ({ icon, size }: IconProps) => (
+  <IconStyled icon={icon} $size={size} />
+);

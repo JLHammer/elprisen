@@ -9,19 +9,17 @@ import { AppRouter } from "./router/AppRouter";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { theme } from "./styles/theme";
 
-export const App = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <SettingsProvider>
-        <BrowserRouter>
-          <AppRouter />
-          <ToastStack>
-            <OfflineReadyToast />
-            <LowestPriceToast />
-          </ToastStack>
-        </BrowserRouter>
-      </SettingsProvider>
-    </ThemeProvider>
-  );
-};
+export const App = () => (
+  <ThemeProvider theme={theme}>
+    <GlobalStyle />
+    <SettingsProvider>
+      <BrowserRouter>
+        <AppRouter />
+        <ToastStack>
+          <OfflineReadyToast />
+          <LowestPriceToast />
+        </ToastStack>
+      </BrowserRouter>
+    </SettingsProvider>
+  </ThemeProvider>
+);

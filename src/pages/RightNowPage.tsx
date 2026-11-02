@@ -5,10 +5,8 @@ import { PAGE_LABELS } from "../router/routes";
 
 const { rightNow } = PAGE_LABELS;
 
-export const RightNowPage = () => {
-  return (
-    <MainContentWrapper title={rightNow} {...SECTION_HEADINGS.rightNow}>
-      <RightNowSection />
-    </MainContentWrapper>
-  );
-};
+export const RightNowPage = () => (
+  <MainContentWrapper title={rightNow} {...SECTION_HEADINGS.rightNow}>
+    <RightNowSection />
+  </MainContentWrapper>
+);

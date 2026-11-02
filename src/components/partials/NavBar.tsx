@@ -20,14 +20,12 @@ const MenuLink = styled(NavLink)`
   }
 `;
 
-export const NavBar = () => {
-  return (
-    <NavBarStyled aria-label="Hovedmenu">
-      {NAV_LINKS.map(({ path, label }) => (
-        <MenuLink key={path} to={path} end>
-          {label}
-        </MenuLink>
-      ))}
-    </NavBarStyled>
-  );
-};
+export const NavBar = () => (
+  <NavBarStyled aria-label="Hovedmenu">
+    {NAV_LINKS.map(({ path, label }) => (
+      <MenuLink key={path} to={path} end>
+        {label}
+      </MenuLink>
+    ))}
+  </NavBarStyled>
+);
