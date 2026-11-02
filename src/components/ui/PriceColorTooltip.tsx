@@ -9,7 +9,7 @@ const Text = styled.p`
 
 const Scale = styled.div`
   display: flex;
-  gap: 0.1rem;
+  gap: 0.25rem;
   margin-top: 0.25rem;
 `;
 

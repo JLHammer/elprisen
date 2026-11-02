@@ -19,7 +19,7 @@ const DatePickerStyled = styled.label`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1.8rem;
+  padding: 0.75rem 1.75rem;
   ${card}
   border-radius: 0.5rem;
   color: ${({ theme }) => theme.colors.primary};

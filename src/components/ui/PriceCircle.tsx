@@ -35,7 +35,7 @@ const VARIANTS: Record<PriceCircleVariant, VariantStyle> = {
     shadow: false,
     rings: [
       { inset: "1rem", dashes: 96, opacity: 0.65 },
-      { inset: "1.9rem", dashes: 85 },
+      { inset: "2rem", dashes: 85 },
     ],
     amountSize: "2rem",
     unitSize: "1.1rem",

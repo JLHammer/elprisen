@@ -20,7 +20,7 @@ type DropdownProps<T extends string> = {
 
 const DropdownStyled = styled.div`
   position: relative;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
 `;
 
@@ -28,7 +28,7 @@ const Trigger = styled.button<{ $open: boolean }>`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.4rem 0.6rem;
+  padding: 0.5rem;
   border-radius: ${({ $open }) => ($open ? "0.25rem 0.25rem 0 0" : "0.25rem")};
   background-color: ${({ theme }) => theme.colors.backgroundDark};
   text-transform: inherit;
@@ -51,7 +51,7 @@ const OptionList = styled.ul`
 `;
 
 const Option = styled.li<{ $selected: boolean; $active: boolean }>`
-  padding: 0.6rem;
+  padding: 0.5rem;
   text-align: center;
   color: ${({ theme, $selected }) => ($selected ? theme.colors.primary : theme.colors.text)};
   background-color: ${({ theme, $active }) =>

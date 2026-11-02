@@ -11,11 +11,11 @@ type SectionHeading = Pick<
 export const SECTION_HEADINGS = {
   rightNow: {
     heading: "Elprisen lige nu",
-    headingSpacing: "4.1rem",
+    headingSpacing: "4rem",
   },
   overview: {
     heading: PAGE_LABELS.overview,
-    headingSpacing: "2.1rem",
+    headingSpacing: "2rem",
     headingExtra: <PriceColorTooltip />,
   },
   history: {
