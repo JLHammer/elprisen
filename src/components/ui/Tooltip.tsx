@@ -36,7 +36,11 @@ const TooltipStyled = styled.span<{ $anchor: TooltipAnchor }>`
   display: inline-flex;
 `;
 
+// The padding grows the 20px icon to WCAG's 24px target size, the negative margin keeps the layout as designed
 const Trigger = styled(IconButton)`
+  padding: 0.15rem;
+  margin: -0.15rem;
+  border-radius: 50%;
   cursor: help;
 `;
 
