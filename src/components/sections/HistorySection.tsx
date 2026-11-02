@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
-import {
-  FIRST_DATE,
-  useElectricityPrices,
-} from "../../hooks/useElectricityPrices";
+import { FIRST_DATE } from "../../api/prices";
+import { useElectricityPrices } from "../../hooks/useElectricityPrices";
 import { useHistoryDate } from "../../hooks/useHistoryDate";
 import { getDanishDate } from "../../utils/danishTime";
 import { formatDate } from "../../utils/format";
