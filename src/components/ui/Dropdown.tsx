@@ -10,6 +10,8 @@ type DropdownOption<T extends string> = {
 
 type DropdownProps<T extends string> = {
   id?: string;
+  // Id of the label, which also names the option list
+  labelId?: string;
   placeholder: string;
   options: DropdownOption<T>[];
   value: T;
@@ -61,6 +63,7 @@ const Option = styled.li<{ $selected: boolean; $active: boolean }>`
 
 export const Dropdown = <T extends string>({
   id,
+  labelId,
   placeholder,
   options,
   value,
@@ -137,7 +140,12 @@ export const Dropdown = <T extends string>({
           <ExpandIcon expanded={open} opens="down" />
         </Chevron>
       </Trigger>
-      <OptionList id={listId} role="listbox" hidden={!open}>
+      <OptionList
+        id={listId}
+        role="listbox"
+        aria-labelledby={labelId}
+        hidden={!open}
+      >
         {options.map((option, index) => (
           <Option
             key={option.value}

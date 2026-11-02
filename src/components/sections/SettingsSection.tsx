@@ -38,6 +38,7 @@ export const SettingsSection = () => {
   const vatId = useId();
   const notificationsId = useId();
   const areaId = useId();
+  const areaLabelId = useId();
   const {
     settings: { includeVat, notifications, area },
     updateSettings,
@@ -63,10 +64,13 @@ export const SettingsSection = () => {
         />
       </Control>
 
-      <Label htmlFor={areaId}>Vælg region</Label>
+      <Label id={areaLabelId} htmlFor={areaId}>
+        Vælg region
+      </Label>
       <Control>
         <Dropdown
           id={areaId}
+          labelId={areaLabelId}
           placeholder="Vælg region"
           options={AREA_OPTIONS}
           value={area}
