@@ -22,7 +22,7 @@ const HistoryDatePicker = styled(DatePicker)`
   margin-bottom: 3rem;
 `;
 
-const Heading = styled.h2`
+const Heading = styled.h3`
   margin-bottom: 1rem;
   font-size: 0.9rem;
   text-transform: uppercase;

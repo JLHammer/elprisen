@@ -45,8 +45,9 @@ const HeadingExtra = styled.div`
   margin-left: 0.5rem;
 `;
 
-const Heading = styled.h1`
+const Heading = styled.h2`
   grid-column: 2;
+  font-size: 1.75rem;
   text-align: center;
   text-transform: uppercase;
 `;

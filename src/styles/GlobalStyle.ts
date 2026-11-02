@@ -32,10 +32,6 @@ const globalStyles = css`
   h6 {
     font-weight: ${({ theme }) => theme.fontWeights.light};
   }
-
-  h1 {
-    font-size: 1.75rem;
-  }
 `;
 
 export const GlobalStyle = createGlobalStyle`

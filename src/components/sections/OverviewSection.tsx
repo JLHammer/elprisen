@@ -6,6 +6,7 @@ import { useUpcomingPrices } from "../../hooks/useUpcomingPrices";
 import { ExpandToggle } from "../ui/ExpandToggle";
 import { PriceHourEntry, PriceHourList } from "../ui/PriceHourEntry";
 import { renderPriceStatus } from "../ui/priceStatus";
+import { VisuallyHidden } from "../ui/VisuallyHidden";
 
 // Hours shown before "Se fremtidige" opens the rest
 const VISIBLE_HOURS = 8;
@@ -35,7 +36,7 @@ const LaterPrices = styled.div`
   gap: 0.5rem;
 `;
 
-const DayDivider = styled.h2`
+const DayDivider = styled.h3`
   margin-top: 1rem;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -83,6 +84,10 @@ export const OverviewSection = () => {
                 onToggle={() => setShowEarlier(!showEarlier)}
               />
             )}
+            {/* The dimming only shows sighted users that these hours are past */}
+            {(isDesktop || showEarlier) && (
+              <VisuallyHidden as="h3">Tidligere i dag</VisuallyHidden>
+            )}
             <EarlierList id={earlierId} hidden={!isDesktop && !showEarlier}>
               {earlierPrices.map((price) => (
                 <PriceHourEntry key={price.time_start} price={price} />
@@ -92,7 +97,11 @@ export const OverviewSection = () => {
         )}
         <LaterPrices id={laterId}>
           {todayPrices.length > 0 && (
-            <PriceHourList>{renderEntries(todayPrices)}</PriceHourList>
+            <>
+              {/* Matches "I morgen" below, and ends the "Tidligere i dag" heading above */}
+              <VisuallyHidden as="h3">Resten af dagen</VisuallyHidden>
+              <PriceHourList>{renderEntries(todayPrices)}</PriceHourList>
+            </>
           )}
           {tomorrowPrices.length > 0 && (
             <>

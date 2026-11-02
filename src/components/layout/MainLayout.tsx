@@ -7,6 +7,7 @@ import { Header } from "../partials/Header";
 import { NavBar } from "../partials/NavBar";
 import { SettingsButton } from "../partials/SettingsButton";
 import { Logo } from "../ui/Logo";
+import { VisuallyHidden } from "../ui/VisuallyHidden";
 
 // Fills the screen, so the footer sits at the bottom on pages with little content
 const MainLayoutStyled = styled.div`
@@ -43,6 +44,8 @@ export const MainLayout = () => {
       </Header>
 
       <Main>
+        {/* The site's heading, so every section heading below is an h2 on every layout */}
+        <VisuallyHidden as="h1">Elprisen</VisuallyHidden>
         <Outlet />
       </Main>
 
