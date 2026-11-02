@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import { FIRST_DATE } from "../../api/prices";
@@ -9,6 +10,7 @@ import { withPriceLevels } from "../../utils/priceLevel";
 import { DatePicker } from "../ui/DatePicker";
 import { PriceHourEntry, PriceHourList } from "../ui/PriceHourEntry";
 import { renderPriceStatus } from "../ui/priceStatus";
+import { VisuallyHidden } from "../ui/VisuallyHidden";
 
 const HistoryStyled = styled.div`
   width: 85%;
@@ -30,6 +32,8 @@ const Heading = styled.h3`
 
 export const HistorySection = () => {
   const { date, setDate } = useHistoryDate();
+  // Only announces dates the user picked, not the one the page opened with
+  const [datePicked, setDatePicked] = useState(false);
   const { prices, loading, error } = useElectricityPrices(
     new Date(`${date}T12:00:00Z`),
   );
@@ -54,10 +58,20 @@ export const HistorySection = () => {
         value={date}
         min={FIRST_DATE}
         max={getDanishDate(1)}
-        onChange={setDate}
+        onChange={(value) => {
+          setDatePicked(true);
+          setDate(value);
+        }}
       />
       {/* Puts the selected date in the heading, e.g. "Elpriserne d. 30-10-2026" */}
       <Heading>Elpriserne d. {formatDate(date)}</Heading>
+      {/* Confirms a picked date once its prices are shown, errors announce themselves */}
+      <VisuallyHidden role="status">
+        {datePicked &&
+          !loading &&
+          !error &&
+          `Viser elpriserne d. ${formatDate(date)}`}
+      </VisuallyHidden>
       {renderContent()}
     </HistoryStyled>
   );
