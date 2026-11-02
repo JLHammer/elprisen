@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 import { card } from "../../styles/card";
-import type { ElectricityPrice } from "../../types/api";
 import { formatKroner, formatTime } from "../../utils/format";
-import { getPriceLevelName } from "../../utils/priceLevel";
+import { getPriceLevelName, type PriceWithLevel } from "../../utils/priceLevel";
 import { VisuallyHidden } from "./VisuallyHidden";
 
 // role="list" because Safari drops the list semantics of lists styled with list-style: none
@@ -35,7 +34,7 @@ const PriceEntry = styled.p<{ $level: number }>`
 `;
 
 type PriceHourEntryProps = {
-  price: ElectricityPrice & { level: number };
+  price: PriceWithLevel;
   current?: boolean;
 };
 

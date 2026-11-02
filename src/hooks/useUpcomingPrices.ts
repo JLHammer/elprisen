@@ -1,10 +1,10 @@
 import type { ElectricityPrice } from "../types/api";
-import { withPriceLevels } from "../utils/priceLevel";
+import { withPriceLevels, type PriceWithLevel } from "../utils/priceLevel";
 import { hasPriceEnded } from "../utils/priceSlot";
 import { useElectricityPrices } from "./useElectricityPrices";
 import { useNow } from "./useNow";
 
-type UpcomingPrice = ElectricityPrice & { level: number; isTomorrow: boolean };
+type UpcomingPrice = PriceWithLevel & { isTomorrow: boolean };
 
 const withLevels = (
   prices: ElectricityPrice[],

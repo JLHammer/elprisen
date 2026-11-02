@@ -1,6 +1,8 @@
 import { priceColors } from "../styles/theme";
 import type { ElectricityPrice } from "../types/api";
 
+export type PriceWithLevel = ElectricityPrice & { level: number };
+
 const LEVEL_COUNT = priceColors.length;
 
 const getPriceLevels = (prices: ElectricityPrice[]) =>
@@ -18,7 +20,9 @@ export const getPriceLevelName = (level: number) =>
   LEVEL_NAMES[Math.floor((level / LEVEL_COUNT) * LEVEL_NAMES.length)];
 
 // Adds each price's color level, ranked against the other prices in the list
-export const withPriceLevels = (prices: ElectricityPrice[]) => {
+export const withPriceLevels = (
+  prices: ElectricityPrice[],
+): PriceWithLevel[] => {
   const levels = getPriceLevels(prices);
   return prices.map((price, index) => ({ ...price, level: levels[index] }));
 };
